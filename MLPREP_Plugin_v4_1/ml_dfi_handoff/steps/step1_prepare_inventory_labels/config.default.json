@@ -1,0 +1,14 @@
+{
+  "landslide_polygon_path": "../../Sample Data/Output/Latest Runs/Step00_DP1/dp1.gpkg|layername=dp1_landslide_polygons_clean",
+  "dem_path": "../../Sample Data/Input/Raster/Shared Inputs/Makilala_DEM_Fill_PRSTM51N.tif",
+  "output_dir": "../../Sample Data/Output/Latest Runs/Step1",
+  "landslide_id_field": "",
+  "depositional_percentile": 15,
+  "non_depositional_percentile": 30,
+  "nodata_value": -9999,
+  "output_pixel_type": "int16",
+  "min_valid_dem_cells": 5,
+  "all_touched": false,
+  "parallel_processing": true,
+  "max_workers": 4
+}

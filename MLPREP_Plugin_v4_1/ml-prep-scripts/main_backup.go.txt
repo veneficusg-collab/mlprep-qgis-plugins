@@ -1,0 +1,362 @@
+// main.go
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+	"io"
+	"log"
+	"os"
+	"os/exec"
+	"path/filepath"
+	"runtime"
+	"strings"
+	"sync"
+	"time"
+)
+
+const (
+	noDataValue = "-9999"
+)
+
+var (
+	zoneRaster        string
+	rasterFolder      string
+	reprojectedFolder string
+	pythonExe         string
+	targetCRS         string
+)
+
+type ZonalResult struct {
+	RasterName string
+	CSVPath    string
+	Error      error
+	Duration   time.Duration
+}
+
+// ── Step 1: Reproject a precipitation/rainfall raster to EPSG:3123 ──────────
+func reprojectRaster(src, dstFolder, targetCRS string) (string, error) {
+	base := filepath.Base(src)
+	dst := filepath.Join(dstFolder, base)
+
+	if _, err := os.Stat(dst); err == nil {
+		fmt.Printf("[Reproject] Skipping (exists): %s\n", base)
+		return dst, nil
+	}
+
+	cmd := exec.Command("gdalwarp",
+		"-t_srs", targetCRS,
+		"-r", "near",
+		"-dstnodata", noDataValue,
+		"-overwrite",
+		src, dst,
+	)
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+
+	if err := cmd.Run(); err != nil {
+		return "", fmt.Errorf("gdalwarp failed on %s: %w", base, err)
+	}
+	return dst, nil
+}
+
+// ── Step 2: Compute zonal stats ──────────────────────────────────────────────
+var zonalStatScript = `
+import sys
+import json
+import os
+import numpy as np
+import geopandas as gpd
+from rasterstats import zonal_stats
+import rasterio
+from rasterio.warp import reproject, Resampling
+from shapely.geometry import box
+
+zone_input      = sys.argv[1]
+value_raster    = sys.argv[2]
+output_gpkg     = sys.argv[3]
+nodata_val      = float(sys.argv[4])
+stat_rule       = sys.argv[5] 
+resample_method = sys.argv[6] if len(sys.argv) > 6 else "nearest"
+
+raster_name = os.path.basename(value_raster).replace(".tif", "").replace(" ", "_").lower()
+
+if zone_input.lower().endswith(('.gpkg', '.shp', '.geojson')):
+    gdf = gpd.read_file(zone_input)
+    rows_written = len(gdf)
+
+    stats = zonal_stats(
+        gdf, 
+        value_raster, 
+        stats=stat_rule, 
+        geojson_out=False, 
+        nodata=nodata_val
+    )
+
+    gdf[raster_name] = [s.get(stat_rule, None) for s in stats]
+    gdf.to_file(output_gpkg, driver="GPKG")
+
+else:
+    CHUNK_SIZE = 500_000
+    resampling = Resampling.bilinear if resample_method == "bilinear" else Resampling.nearest
+
+    with rasterio.open(zone_input) as z:
+        zone_data = z.read(1)
+        zone_transform = z.transform
+        zone_crs = z.crs
+        zone_shape = z.shape
+
+    with rasterio.open(value_raster) as v:
+        value_nodata = v.nodata if v.nodata is not None else nodata_val
+        value_data = np.empty(zone_shape, dtype=np.float32)
+        
+        reproject(
+            source=rasterio.band(v, 1),
+            destination=value_data,
+            src_transform=v.transform,
+            src_crs=v.crs,
+            dst_transform=zone_transform,
+            dst_crs=zone_crs, 
+            dst_shape=zone_shape,
+            resampling=resampling,
+        )
+
+    rows_idx, cols_idx = np.where(zone_data == 1)
+    total_cells = len(rows_idx)
+    values = value_data[rows_idx, cols_idx].astype(float)
+    nodata_mask = (values == value_nodata) | (values == nodata_val) | np.isnan(values)
+    values[nodata_mask] = np.nan
+
+    half = abs(zone_transform.a) / 2.0
+    total_written = 0
+    first_chunk = True
+
+    for start in range(0, total_cells, CHUNK_SIZE):
+        end = min(start + CHUNK_SIZE, total_cells)
+        c_rows, c_cols, c_vals = rows_idx[start:end], cols_idx[start:end], values[start:end]
+
+        if np.all(np.isnan(c_vals)): continue
+
+        c_east = zone_transform.c + (c_cols + 0.5) * zone_transform.a
+        c_north = zone_transform.f + (c_rows + 0.5) * zone_transform.e
+        
+        c_geoms = [box(c_east[i]-half, c_north[i]-half, c_east[i]+half, c_north[i]+half) for i in range(len(c_rows))]
+
+        chunk_gdf = gpd.GeoDataFrame({raster_name: c_vals}, geometry=c_geoms, crs=zone_crs)
+        chunk_gdf = chunk_gdf.dropna(subset=[raster_name])
+        if len(chunk_gdf) == 0: continue
+
+        mode = "w" if first_chunk else "a"
+        chunk_gdf.to_file(output_gpkg, layer=raster_name, driver="GPKG", mode=mode)
+        
+        first_chunk = False
+        total_written += len(chunk_gdf)
+        
+    rows_written = total_written
+
+print(json.dumps({
+    "status": "ok",
+    "rows": rows_written,
+    "gpkg": output_gpkg,
+    "layer": raster_name
+}))
+`
+
+func computeZonalStats(zoneRaster, valueRaster, baseName, outputGPKG, statRule, resampleMethod string) (int, string, error) {
+	tmpScript, err := os.CreateTemp("", "zonalstat_*.py")
+	if err != nil {
+		return 0, "", fmt.Errorf("failed to create temp script: %w", err)
+	}
+	defer os.Remove(tmpScript.Name())
+	tmpScript.WriteString(zonalStatScript)
+	tmpScript.Close()
+
+	cmd := exec.Command(pythonExe,
+		tmpScript.Name(),
+		zoneRaster,
+		valueRaster,
+		outputGPKG,
+		noDataValue,
+		statRule,
+		resampleMethod,
+	)
+
+	var stderrBuf strings.Builder
+	cmd.Stderr = io.MultiWriter(os.Stderr, &stderrBuf)
+
+	out, err := cmd.Output()
+	if err != nil {
+		return 0, "", fmt.Errorf("python error:\n%s", stderrBuf.String())
+	}
+
+	var result map[string]interface{}
+	if err := json.Unmarshal(out, &result); err != nil {
+		return 0, "", fmt.Errorf("JSON parse error: %w\nPython output was: %s", err, string(out))
+	}
+
+	rows := int(result["rows"].(float64))
+	layer := result["layer"].(string)
+	return rows, layer, nil
+}
+
+func processRaster(
+	rasterPath string,
+	wg *sync.WaitGroup,
+	results chan<- ZonalResult,
+	sem chan struct{},
+) {
+	defer wg.Done()
+	defer func() { <-sem }()
+
+	start := time.Now()
+	fileName := filepath.Base(rasterPath)
+	baseName := strings.TrimSuffix(fileName, ".tif")
+
+	var statRule string
+	switch baseName {
+	case "SoilType", "LULC":
+		statRule = "majority"
+	case "DistanceToFault", "DistanceToRoad", "DistanceToRiver":
+		statRule = "min"
+	default:
+		statRule = "mean"
+	}
+
+	outputGPKG := filepath.Join(reprojectedFolder, fmt.Sprintf("%s_zonal.gpkg", baseName))
+
+	reprojPath, err := reprojectRaster(rasterPath, reprojectedFolder, targetCRS)
+	if err != nil {
+		results <- ZonalResult{RasterName: baseName, Error: fmt.Errorf("reproject: %w", err)}
+		return
+	}
+
+	fmt.Printf("[ZonalStats] %-30s calculating %s...\n", baseName, strings.ToUpper(statRule))
+	_, _, err = computeZonalStats(zoneRaster, reprojPath, baseName, outputGPKG, statRule, "nearest")
+	if err != nil {
+		results <- ZonalResult{RasterName: baseName, Error: fmt.Errorf("zonal stats: %w", err)}
+		return
+	}
+
+	fmt.Printf("[RASTER_DONE] %s\n", baseName)
+
+	results <- ZonalResult{
+		RasterName: baseName,
+		CSVPath:    outputGPKG,
+		Duration:   time.Since(start),
+	}
+}
+
+// ── Main ─────────────────────────────────────────────────────────────────────
+func main() {
+	totalStart := time.Now()
+
+	if len(os.Args) < 6 {
+		log.Fatalf("Usage: go run . <zone_gpkg> <input_raster_folder> <output_folder> <python_exe> <target_crs>")
+	}
+
+	zoneRaster = os.Args[1]
+	rasterFolder = os.Args[2]
+	reprojectedFolder = os.Args[3]
+	pythonExe = os.Args[4]
+	targetCRS = os.Args[5]
+
+	fmt.Printf("🎯 Target CRS    : %s\n", targetCRS)
+
+	if err := os.MkdirAll(reprojectedFolder, 0755); err != nil {
+		log.Fatalf("Cannot create output folder: %v", err)
+	}
+
+	entries, err := os.ReadDir(rasterFolder)
+	if err != nil {
+		log.Fatalf("Cannot read raster folder %s: %v", rasterFolder, err)
+	}
+
+	var rasters []string
+	for _, entry := range entries {
+		if !entry.IsDir() && strings.HasSuffix(strings.ToLower(entry.Name()), ".tif") {
+			rasters = append(rasters, filepath.Join(rasterFolder, entry.Name()))
+		}
+	}
+
+	maxWorkers := runtime.NumCPU()
+	if maxWorkers > len(rasters) {
+		maxWorkers = len(rasters)
+	}
+	fmt.Printf("⚙  Workers       : %d (CPU cores)\n\n", maxWorkers)
+
+	sem := make(chan struct{}, maxWorkers)
+	resultsChan := make(chan ZonalResult, len(rasters))
+	var wg sync.WaitGroup
+
+	for _, raster := range rasters {
+		wg.Add(1)
+		sem <- struct{}{}
+		go processRaster(raster, &wg, resultsChan, sem)
+	}
+
+	wg.Wait()
+	close(resultsChan)
+
+	// =========================================================================
+	// 🟢 THE NEW MERGE PHASE: Stitch all files into one GPKG
+	// =========================================================================
+	fmt.Println("\n[Merging] Combining all features into a single Geopackage...")
+	mergeScript := `
+import sys, os, glob
+import geopandas as gpd
+
+zone_gpkg = sys.argv[1]
+output_dir = sys.argv[2]
+final_out = sys.argv[3]
+
+print("Loading base geometry...")
+master_gdf = gpd.read_file(zone_gpkg)
+
+gpkg_files = glob.glob(os.path.join(output_dir, "*_zonal.gpkg"))
+
+for f in gpkg_files:
+    print(f"Merging {os.path.basename(f)}...")
+    temp_gdf = gpd.read_file(f)
+    # Find the new column that was calculated
+    new_cols = [c for c in temp_gdf.columns if c not in master_gdf.columns and c != 'geometry']
+    for c in new_cols:
+        master_gdf[c] = temp_gdf[c]
+
+print("Saving Merged_PINN_Features.gpkg...")
+master_gdf.to_file(final_out, driver="GPKG")
+
+print("Cleaning up temporary files...")
+# 1. Delete the intermediate zonal geopackages
+for f in gpkg_files:
+    try:
+        os.remove(f)
+    except:
+        pass
+
+# 2. Delete the massive reprojected TIFF files to save space!
+tif_files = glob.glob(os.path.join(output_dir, "*.tif"))
+for t in tif_files:
+    try:
+        os.remove(t)
+    except:
+        pass
+`
+	tmpMerge, _ := os.CreateTemp("", "merge_*.py")
+	tmpMerge.WriteString(mergeScript)
+	tmpMerge.Close()
+	defer os.Remove(tmpMerge.Name())
+
+	finalGPKG := filepath.Join(reprojectedFolder, "Merged_PINN_Features.gpkg")
+	mergeCmd := exec.Command(pythonExe, tmpMerge.Name(), zoneRaster, reprojectedFolder, finalGPKG)
+	mergeCmd.Stdout = os.Stdout
+	mergeCmd.Stderr = os.Stderr
+
+	if err := mergeCmd.Run(); err != nil {
+		fmt.Printf("❌ Merge Failed: %v\n", err)
+	} else {
+		// Signal to the QGIS UI that everything is 100% complete!
+		fmt.Println("[MERGE_DONE] " + finalGPKG)
+	}
+
+	fmt.Printf("\nDone — Total Time: %s\n", time.Since(totalStart))
+}

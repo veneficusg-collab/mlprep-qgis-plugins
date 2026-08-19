@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "runtime": {
+    "python_executable": "",
+    "osgeo4w_root": "",
+    "mpiexec": "",
+    "taudem_dll_dir": "",
+    "taudem_proj_dir": "",
+    "step4_executable": "",
+    "workers": {
+      "data_preparation": null,
+      "step1_prepare_inventory_labels": null,
+      "step3_train_ml_dfi_model": null,
+      "step4_deposition_zone": null
+    }
+  },
+  "steps": {
+    "data_preparation": "../steps/data_preparation/config.default.json",
+    "step0_baseline_alpha_angle": "../steps/step0_baseline_alpha_angle/config.default.json",
+    "step1_prepare_inventory_labels": "../steps/step1_prepare_inventory_labels/config.default.json",
+    "step2_extract_pixel_samples": "../steps/step2_extract_pixel_samples/config.default.json",
+    "step3_train_ml_dfi_model": "../steps/step3_train_ml_dfi_model/config.default.json",
+    "step3_model_application": "../steps/step3_train_ml_dfi_model/config.application.example.json",
+    "step4_deposition_zone": "../steps/step4_deposition_zone/config.default.json",
+    "step5_post_depositional_spread_PDS": "../steps/step5_post_depositional_spread_PDS/config.default.json",
+    "step6_landslide_damming_potential_LDP": "../steps/step6_landslide_damming_potential_LDP/config.default.json"
+  },
+  "step_overrides": {}
+}

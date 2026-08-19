@@ -1,0 +1,7 @@
+{
+	"InstallScripts" : 
+	[
+		"/Users/ml-prepproject/Library/Application Support/QGIS/QGIS3/profiles/default/python/plugins/MLPREP_Plugin_v4/ml_dfi_handoff/steps/step4_deposition_zone/cpp_mpi_port/build_mac/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

@@ -1,0 +1,13 @@
+name: mldfi-standard
+
+channels:
+  - conda-forge
+
+dependencies:
+  # Standard Python runtime for Steps 0-3 and workspace utilities.
+  - python=3.13.12
+  - pip=25.3
+  - pip:
+      # Run `conda env create -f environment.yml` from the workspace root.
+      - -r requirements.lock.txt
+

@@ -1,0 +1,110 @@
+{
+  "schema_version": 1,
+  "runtime": {
+    "python_executable": "",
+    "osgeo4w_root": "",
+    "mpiexec": "",
+    "taudem_dll_dir": "",
+    "taudem_proj_dir": "",
+    "step4_executable": "",
+    "workers": {
+      "data_preparation": 4,
+      "step1_prepare_inventory_labels": 4,
+      "step3_train_ml_dfi_model": 4,
+      "step4_deposition_zone": 8
+    }
+  },
+  "step_overrides": {
+    "data_preparation": {
+      "dp1": {
+        "landslide_polygons": "../study_data/input/landslide_inventory.shp",
+        "dem": "../study_data/input/dem.tif",
+        "output_dir": "../study_data/output/data_preparation"
+      }
+    },
+    "step0_baseline_alpha_angle": {
+      "slope": "../study_data/input/slope.tif",
+      "output_alpha": "../study_data/output/step0/baseline_alpha.tif",
+      "output_class": "../study_data/output/step0/baseline_alpha_class.tif",
+      "metadata_out": "../study_data/output/step0/baseline_alpha_metadata.json"
+    },
+    "step1_prepare_inventory_labels": {
+      "landslide_polygon_path": "../study_data/input/clean_landslide_inventory.shp",
+      "dem_path": "../study_data/input/dem.tif",
+      "output_dir": "../study_data/output/step1"
+    },
+    "step2_extract_pixel_samples": {
+      "extract_pixel_samples": {
+        "label_raster_path": "../study_data/output/step1/ml_dfi_label_raster.tif",
+        "predictor_rasters": {
+          "$replace": true,
+          "twi": "../study_data/input/predictors/twi.tif",
+          "slope": "../study_data/input/predictors/slope.tif",
+          "profile_curvature": "../study_data/input/predictors/profile_curvature.tif",
+          "plan_curvature": "../study_data/input/predictors/plan_curvature.tif",
+          "ndvi": "../study_data/input/predictors/ndvi.tif",
+          "geomorphology": "../study_data/input/predictors/geomorphology.tif",
+          "dugsurf": "../study_data/input/predictors/dugsurf.tif",
+          "dstgsurf": "../study_data/input/predictors/dstgsurf.tif"
+        },
+        "group_rasters": {
+          "landslide_id": "../study_data/output/step1/landslide_id_raster.tif"
+        },
+        "output_dir": "../study_data/output/step2"
+      }
+    },
+    "step3_train_ml_dfi_model": {
+      "input_sample_table": "../study_data/output/step2/ml_dfi_pixel_samples.csv",
+      "output_dir": "../study_data/output/step3/model_training_validation"
+    },
+    "step3_model_application": {
+      "apply_ml_dfi_model": {
+        "model_path": "../study_data/output/step3/model_training_validation/trained_ml_dfi_model.pkl",
+        "metadata_path": "../study_data/output/step3/model_training_validation/model_metadata.json",
+        "reference_raster_path": "../study_data/input/reference_grid.tif",
+        "output_dir": "../study_data/output/step3/domain_application"
+      }
+    },
+    "step4_deposition_zone": {
+      "dem_fel_raster": "../study_data/input/dem_fill.tif",
+      "dinf_flow_raster": "../study_data/input/dinf_flow_direction.tif",
+      "source_raster": "../study_data/input/source_mask.tif",
+      "dfi_raster": "../study_data/output/step3/domain_application/ml_dfi_probability_full_valid_predictor_domain.tif",
+      "alpha_raster": "../study_data/output/step0/baseline_alpha.tif",
+      "output_dynamic_alpha": "../study_data/output/step4/dynamic_alpha.tif",
+      "output_beta_angle": "../study_data/output/step4/beta_angle.tif",
+      "output_dfs": "../study_data/output/step4/dfs.tif",
+      "output_mask": "../study_data/output/step4/runout_mask.tif",
+      "output_depositional_mask": "../study_data/output/step4/depositional_mask.tif",
+      "output_summary_json": "../study_data/output/step4/runout_summary.json"
+    },
+    "step5_post_depositional_spread_PDS": {
+      "runout_mask_raster": "../study_data/output/step4/runout_mask.tif",
+      "dfi_raster": "../study_data/output/step3/domain_application/ml_dfi_probability_full_valid_predictor_domain.tif",
+      "dem_raster": "../study_data/input/dem_fill.tif",
+      "source_mask_raster": "../study_data/input/source_mask.tif",
+      "stream_mask_raster": "../study_data/input/stream_mask.tif",
+      "source_contributing_area_raster": "../study_data/input/source_contributing_area.tif",
+      "output_spread_mask": "../study_data/output/step5/spread_mask.tif",
+      "output_combined_mask": "../study_data/output/step5/combined_mask.tif",
+      "output_seed_mask": "../study_data/output/step5/seed_mask.tif",
+      "output_cleaned_runout_mask": "../study_data/output/step5/cleaned_runout_mask.tif",
+      "output_removed_runout_mask": "../study_data/output/step5/removed_runout_mask.tif",
+      "output_summary_json": "../study_data/output/step5/spread_summary.json",
+      "output_min_elev_diff": "../study_data/output/step5/min_elevation_difference.tif",
+      "output_source_row": "../study_data/output/step5/source_row.tif",
+      "output_source_col": "../study_data/output/step5/source_col.tif"
+    },
+    "step6_landslide_damming_potential_LDP": {
+      "runout_mask_raster": "../study_data/output/step5/combined_mask.tif",
+      "stream_raster": "../study_data/input/dinf_stream_mask.tif",
+      "dinf_flow_raster": "../study_data/input/dinf_flow_direction.tif",
+      "slope_raster": "../study_data/input/slope.tif",
+      "dem_fel_raster": "../study_data/input/dem_fill.tif",
+      "output_stream_intersection_mask": "../study_data/output/step6/runout_stream_intersection_mask.tif",
+      "output_damming_potential_class": "../study_data/output/step6/damming_potential_class.tif",
+      "output_damming_potential_score": "../study_data/output/step6/damming_potential_score.tif",
+      "output_summary_json": "../study_data/output/step6/damming_potential_summary.json"
+    }
+  }
+}

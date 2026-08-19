@@ -1,0 +1,26 @@
+{
+  "dp1": {
+    "landslide_polygons": "../../Sample Data/Input/Shapefile/PRSTM/Makilala_LI_PRSTM51N.shp",
+    "id_field": "OBJECTID",
+    "dem": "../../Sample Data/Input/Raster/Utils/PRSTM/Makilala_DEM_Buff_PRSTM51N.tif",
+    "output_dir": "../../Sample Data/Output/Latest Runs/Step00_DP1",
+    "output_prefix": "dp1",
+    "buffer_min_m": 10.0,
+    "buffer_pixel_multiple": 2.0,
+    "boundary_sample_step_m": 10.0,
+    "crown_percentile_high": 90.0,
+    "endpoint_snap_search_radius_px": 4,
+    "qc_percentile_high": 90.0,
+    "enable_early_polygon_filter": true,
+    "complexity_threshold": 1.0,
+    "early_exclusion_area_threshold_m2": 250.0,
+    "parallel": {
+      "enable_parallel": true,
+      "max_workers": 4,
+      "worker_start_method": "spawn",
+      "preserve_order": true,
+      "fail_fast": false,
+      "worker_chunk_size": 1
+    }
+  }
+}
