@@ -1,3 +1,4 @@
+
 /*  Taudem common library functions 
 
 David Tarboton, Kim Schreuders, Dan Watson
@@ -595,4 +596,5 @@ void tiffIO::globalXYToGeo(long globalX, long globalY, double &geoX, double &geo
 	geoX = xleftedge + dlon / 2. + globalX*dlon;
 	geoY = ytopedge - dlat / 2. - globalY*dlat;
 }
+
 

@@ -1,3 +1,4 @@
+
 # Step 2: Extract Pixel Samples
 
 ## What This Step Does
@@ -344,3 +345,4 @@ If Parquet output is requested, Parquet support depends on the installed pandas 
 
 - [step2_extract_pixel_samples.py](step2_extract_pixel_samples.py)
 - [step2.md](step2.md)
+

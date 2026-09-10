@@ -1,3 +1,4 @@
+
 # Step 4: Dynamic-Alpha Deposition-Zone Routing
 
 Step 4 is the Codes_V2 dynamic-alpha terrain-factor runtime. The active runtime
@@ -561,3 +562,4 @@ The cleanest way to think about Step 4 is this:
 - one winning source path owns each accepted cell
 
 That is the current maintained Step 4 behavior.
+

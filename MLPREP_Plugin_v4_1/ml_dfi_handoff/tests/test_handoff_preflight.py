@@ -1,3 +1,4 @@
+
 from handoff_preflight import (
     find_machine_specific_text,
     is_absolute_path,
@@ -51,3 +52,4 @@ def test_package_policy_keeps_source_and_reviewed_step4_executable():
         )
         is None
     )
+

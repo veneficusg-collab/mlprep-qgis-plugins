@@ -1,3 +1,4 @@
+
 @echo off
 setlocal
 if defined MLDFI_PYTHON (
@@ -15,3 +16,4 @@ if "%~1"=="" (
   "%PYTHON_EXE%" "%~dp0step1_prepare_inventory_labels.py" %*
 )
 exit /b %ERRORLEVEL%
+

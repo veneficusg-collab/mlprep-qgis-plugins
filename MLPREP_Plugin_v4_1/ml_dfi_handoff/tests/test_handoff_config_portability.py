@@ -1,3 +1,4 @@
+
 from __future__ import annotations
 
 import argparse
@@ -114,3 +115,4 @@ def test_model_application_paths_are_relative_to_config(tmp_path: Path) -> None:
         (config_dir / "inputs/reference.tif").resolve()
     )
     assert config["output_dir"] == str((config_dir / "outputs").resolve())
+

@@ -1,3 +1,4 @@
+
 /*++
 
 Copyright (c) Microsoft Corporation
@@ -206,3 +207,4 @@ typedef struct _PmiServiceLaunchInterface
 
 
 #endif // _MSPMS_H_
+

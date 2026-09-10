@@ -1,3 +1,4 @@
+
 # Step 00: DP1 Observed Alpha-Angle Data Preparation
 
 ## Purpose
@@ -151,3 +152,4 @@ the routing engine, GIS helpers, multiprocessing worker, and run orchestration.
   longer creates a temporary contour TIFF or per-polygon scratch directory.
 - GeoPackage features are written in transactions after all workers finish.
   Workers never write concurrently to the output GeoPackage.
+

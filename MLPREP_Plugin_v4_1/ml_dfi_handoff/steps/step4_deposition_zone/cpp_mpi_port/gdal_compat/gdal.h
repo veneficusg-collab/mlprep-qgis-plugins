@@ -1,3 +1,4 @@
+
 #ifndef STEP4_GDAL_COMPAT_GDAL_H
 #define STEP4_GDAL_COMPAT_GDAL_H
 
@@ -84,3 +85,4 @@ void GDALFlushCache(GDALDatasetH);
 #endif
 
 #endif
+

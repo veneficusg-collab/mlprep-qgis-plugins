@@ -1,3 +1,4 @@
+
 /*  Taudem create partition header
 
   David Tarboton, Dan Watson
@@ -106,3 +107,4 @@ tdpartition *CreateNewPartition(DATA_TYPE datatype, long totalx, long totaly, do
 	return ptr;
 } 
 #endif
+

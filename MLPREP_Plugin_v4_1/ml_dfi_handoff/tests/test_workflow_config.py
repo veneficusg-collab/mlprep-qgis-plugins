@@ -1,3 +1,4 @@
+
 from __future__ import annotations
 
 import json
@@ -214,3 +215,4 @@ def test_model_application_uses_centralized_step2_predictor_config(tmp_path):
     assert predictors["extract_pixel_samples"]["predictor_rasters"] == {
         "slope": str((tmp_path / "inputs/slope.tif").resolve())
     }
+

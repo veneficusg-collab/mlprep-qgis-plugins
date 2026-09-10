@@ -1,3 +1,4 @@
+
 import json
 from pathlib import Path
 
@@ -103,3 +104,4 @@ def test_standard_setup_enforces_frozen_python_and_pip():
 
     assert 'REQUIRED_PYTHON = "3.13.12"' in setup
     assert 'REQUIRED_PIP = "25.3"' in setup
+

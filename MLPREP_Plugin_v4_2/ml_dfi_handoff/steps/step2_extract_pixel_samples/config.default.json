@@ -1,0 +1,29 @@
+{
+  "extract_pixel_samples": {
+    "label_raster_path": "../../Sample Data/Output/Latest Runs/Step1/ml_dfi_label_raster.tif",
+    "predictor_rasters": {
+      "twi": "../../Sample Data/Input/Raster/Predictors/Topographic/Filtered/Makilala_TWI_Final_LPF_PRSTM51N.tif",
+      "slope": "../../Sample Data/Input/Raster/Predictors/Topographic/Filtered/Makilala_Slope_LPF_PRSTM51N.tif",
+      "profile_curvature": "../../Sample Data/Input/Raster/Predictors/Topographic/Filtered/Makilala_ProfCurv_LPF_PRSTM51N.tif",
+      "plan_curvature": "../../Sample Data/Input/Raster/Predictors/Topographic/Filtered/Makilala_PlanCurv_LPF_PRSTM51N.tif",
+      "ndvi": "../../Sample Data/Input/Raster/Predictors/Topographic/Filtered/Makilala_NDVI_LPF_PRSTM51N.tif",
+      "geomorphology": "../../Sample Data/Input/Raster/Predictors/Topographic/Filtered/Makilala_Geomorphology_PRSTM51N.tif",
+      "dugsurf": "../../Sample Data/Input/Raster/Predictors/Topographic/Filtered/Makilala_DUGSurf_LPF_PRSTM51N.tif",
+      "dstgsurf": "../../Sample Data/Input/Raster/Predictors/Topographic/Filtered/Makilala_DStGSurf_LPF_PRSTM51N.tif",
+      "proximity_to_stream": "../../Sample Data/Input/Raster/Predictors/Topographic/Makilala_PtS_PRSTM51N.tif"
+    },
+    "group_rasters": {
+      "landslide_id": "../../Sample Data/Output/Latest Runs/Step1/landslide_id_raster.tif"
+    },
+    "categorical_predictors": [
+      "geomorphology"
+    ],
+    "output_dir": "../../Sample Data/Output/Latest Runs/Step2",
+    "output_table_name": "ml_dfi_pixel_samples",
+    "output_format": "csv",
+    "label_nodata_value": -9999,
+    "include_coordinates": true,
+    "include_row_col": true,
+    "compress_outputs": true
+  }
+}

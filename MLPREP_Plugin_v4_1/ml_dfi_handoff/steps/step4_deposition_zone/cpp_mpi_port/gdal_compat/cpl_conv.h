@@ -1,3 +1,4 @@
+
 #ifndef STEP4_GDAL_COMPAT_CPL_CONV_H
 #define STEP4_GDAL_COMPAT_CPL_CONV_H
 
@@ -15,3 +16,4 @@ void CPLFree(void*);
 #endif
 
 #endif
+

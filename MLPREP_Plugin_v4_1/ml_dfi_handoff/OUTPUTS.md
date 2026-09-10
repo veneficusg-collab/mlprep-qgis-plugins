@@ -1,3 +1,4 @@
+
 # Output Organization
 
 Workflow outputs are local artifacts and are not included in source handoff
@@ -34,3 +35,4 @@ bundle to `Latest Runs`.
 archives are excluded from handoff packages. Use
 `scripts/create_handoff_package.py`; it packages only Git-tracked source files
 that pass the repository denylist and writes a checksum manifest into the ZIP.
+

@@ -1,3 +1,4 @@
+
 Copyright (C) 2014  David Tarboton, Utah State University
 
 This program is free software; you can redistribute it and/or
@@ -30,3 +31,4 @@ If you contribute code to this repository you grant permission for the copyright
 the code you contribute to be assigned to  David Tarboton, Utah State University and 
 distributed according to the GPL license above and any other licensing agreement that 
 he may choose.
+

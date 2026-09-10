@@ -1,3 +1,4 @@
+
 #!/usr/bin/env python
 """Validate the frozen DP1 QGIS LTR/OSGeo4W environment."""
 
@@ -92,3 +93,4 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+

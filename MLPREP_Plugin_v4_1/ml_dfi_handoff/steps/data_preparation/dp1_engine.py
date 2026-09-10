@@ -1,3 +1,4 @@
+
 """Core Step 1 path engine.
 
 Plain-English map of this file:
@@ -967,3 +968,4 @@ def run_step1_core(core_input: Step1CoreInput) -> Step1CoreResult:
         path_result=path_result,
         summary=summary,
     )
+

@@ -1,3 +1,4 @@
+
 # Step 0: Source-Slope Baseline Alpha Raster
 
 Step 0 is the Codes_V2 copy of the DP5 source-slope baseline alpha-angle
@@ -165,3 +166,4 @@ On Windows, older GIS applications can leave `PROJ_LIB`, `PROJ_DATA`, or
 rasterio. If the command reports a PROJ database version mismatch, run Step 0
 from a clean terminal or remove those inherited overrides for that terminal
 session before running the script.
+

@@ -1,3 +1,4 @@
+
 {
   "dem_fel_raster": "../../Sample Data/Input/Raster/Shared Inputs/Makilala_DEM_Fill_PRSTM51N.tif",
   "dinf_flow_raster": "../../Sample Data/Input/Raster/Shared Inputs/Makilala_DFD_PRSTM51N.tif",
@@ -49,3 +50,4 @@
   "output_candidate_points": "",
   "output_summary_json": "../../Sample Data/Output/Latest Runs/Step6/step6_runout_meanapproach25m_highveryhigh5m_summary.json"
 }
+

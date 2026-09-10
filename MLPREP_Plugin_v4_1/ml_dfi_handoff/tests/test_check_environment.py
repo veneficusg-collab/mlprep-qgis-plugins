@@ -1,3 +1,4 @@
+
 from pathlib import Path
 
 import numpy as np
@@ -146,3 +147,4 @@ def test_transform_mismatch_is_a_blocking_failure(tmp_path, capsys, monkeypatch)
 
     assert report.failures == 1
     assert "raster alignment mismatch" in capsys.readouterr().out
+

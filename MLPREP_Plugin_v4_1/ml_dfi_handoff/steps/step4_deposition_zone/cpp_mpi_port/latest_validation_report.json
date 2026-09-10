@@ -1,3 +1,4 @@
+
 {
   "validation_date": "2026-07-27",
   "executable_sha256": "dc93b9f567c89f818246cedf02e7fa9c99699a9e11a79e5f5091538516bff66b",
@@ -39,3 +40,4 @@
   "historical_reference_lineage": "The retained baseline was previously validated against the archived Python reference. The current optimized executable is pixel-identical to that retained baseline; the archived Python file remains historical evidence, not a runtime fallback.",
   "test_command": "RUN_STEP4_MPI_INTEGRATION=1 RUN_STEP4_FULL_REGRESSION=1 pytest tests/test_step4_mpi_integration.py"
 }
+

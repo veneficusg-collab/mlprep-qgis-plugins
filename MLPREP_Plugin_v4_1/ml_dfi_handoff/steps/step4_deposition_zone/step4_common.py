@@ -1,3 +1,4 @@
+
 ﻿"""Shared Step 4 config, raster validation, and reporting helpers.
 
 This module is intentionally routing-engine neutral. The active C++/MPI wrapper
@@ -902,4 +903,5 @@ def build_debug_output_paths(output_dynamic_alpha: str, write_debug_rasters: boo
     return {
         "parent_dynamic_alpha": derive_related_output_path(output_dynamic_alpha, "parent_dynamic_alpha"),
     }
+
 

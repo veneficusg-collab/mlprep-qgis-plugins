@@ -1,0 +1,20 @@
+# Tested native QGIS/OSGeo4W package builds
+#
+# This is an audit lock, not a pip or Conda requirements file. Install these
+# through the OSGeo4W/QGIS LTR installer when the archived builds are available.
+# Runtime checks must use the actual versions in ENVIRONMENT.md.
+qgis-ltr=3.40.7-1
+gdal=3.10.3-2
+proj=9.6.0-2
+python3-core=3.12.10-1
+python3-pip=25.0-1
+python3-numpy=1.26.4-1
+python3-pandas=2.2.2-1
+python3-geopandas=1.0.1-1
+python3-scipy=1.13.0-1
+python3-matplotlib=3.10.0-1
+python3-pyproj=3.7.0-2
+python3-shapely=2.0.6-1
+python3-pyarrow=19.0.1-1
+python3-pyogrio=0.9.0-2
+

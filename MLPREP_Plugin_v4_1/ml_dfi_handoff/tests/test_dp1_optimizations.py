@@ -1,3 +1,4 @@
+
 from __future__ import annotations
 
 import sys
@@ -43,3 +44,4 @@ def test_prepared_containment_matches_polygon_covers_rule() -> None:
 
     assert dp1_engine._segment_within_polygon(prepared, (1.0, 1.0), (9.0, 1.0))
     assert not dp1_engine._segment_within_polygon(prepared, (2.0, 8.0), (8.0, 8.0))
+

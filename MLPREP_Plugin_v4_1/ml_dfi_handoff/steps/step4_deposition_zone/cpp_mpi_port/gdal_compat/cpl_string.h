@@ -1,3 +1,4 @@
+
 #ifndef STEP4_GDAL_COMPAT_CPL_STRING_H
 #define STEP4_GDAL_COMPAT_CPL_STRING_H
 
@@ -12,3 +13,4 @@ char** CSLSetNameValue(char**, const char*, const char*);
 #endif
 
 #endif
+

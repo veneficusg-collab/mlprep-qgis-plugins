@@ -1,3 +1,4 @@
+
 #ifndef STEP4_GDAL_COMPAT_OGR_SPATIALREF_H
 #define STEP4_GDAL_COMPAT_OGR_SPATIALREF_H
 
@@ -17,3 +18,4 @@ double OSRGetLinearUnits(OGRSpatialReferenceH, char**);
 #endif
 
 #endif
+

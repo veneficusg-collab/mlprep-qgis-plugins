@@ -1,3 +1,4 @@
+
 $ErrorActionPreference = "Stop"
 $workspace = $PSScriptRoot
 
@@ -13,3 +14,4 @@ if ($env:MLDFI_CONFIG_PYTHON) {
 
 & $python (Join-Path $workspace "workflow_config.py") @args
 exit $LASTEXITCODE
+

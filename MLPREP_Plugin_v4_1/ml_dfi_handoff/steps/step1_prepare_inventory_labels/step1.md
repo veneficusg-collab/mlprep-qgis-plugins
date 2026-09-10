@@ -1,3 +1,4 @@
+
 # Step 1: Prepare Inventory Labels
 
 ## What This Step Does
@@ -180,3 +181,4 @@ python .\steps\step1_prepare_inventory_labels\step1_prepare_inventory_labels.py 
 
 - [step1_prepare_inventory_labels.py](step1_prepare_inventory_labels.py)
 - [step1.md](step1.md)
+

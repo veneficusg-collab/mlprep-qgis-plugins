@@ -1,3 +1,4 @@
+
 ﻿"""Create a source-slope-based baseline alpha raster from slope in degrees.
 
 This Step 0 product is a baseline alpha prior for the dynamic-alpha DFI runout
@@ -621,4 +622,5 @@ def main(argv: Sequence[str] | None = None) -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
 

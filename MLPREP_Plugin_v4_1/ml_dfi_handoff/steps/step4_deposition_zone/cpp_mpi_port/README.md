@@ -1,3 +1,4 @@
+
 ﻿# Step 4 Deposition Zone C++/MPI Port
 
 This folder contains the active C++/MPI Step 4 routing core. It was validated
@@ -223,6 +224,7 @@ were exactly identical to each other and to the retained production baseline:
 `6,910,670` runout cells and `645,620` pure depositional cells. A focused
 synthetic `n=1`/`n=2` test also verifies process-count equality and the exact
 200 m planimetric cap. See `latest_validation_report.json`.
+
 
 
 

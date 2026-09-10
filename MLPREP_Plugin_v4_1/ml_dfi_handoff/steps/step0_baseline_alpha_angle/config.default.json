@@ -1,3 +1,4 @@
+
 {
   "slope": "../../Sample Data/Input/Raster/Predictors/Topographic/Filtered/Makilala_Slope_LPF_PRSTM51N.tif",
   "output_alpha": "../../Sample Data/Output/Latest Runs/Step0/Makilala_BaselineAlpha_PRSTM51N.tif",
@@ -6,3 +7,4 @@
   "nodata": -9999.0,
   "overwrite": false
 }
+
