@@ -1,0 +1,45 @@
+{
+  "model_path": "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Output\\Latest Runs\\Step3\\trained_ml_dfi_model.pkl",
+  "metadata_path": "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Output\\Latest Runs\\Step3\\model_metadata.json",
+  "predictor_config_json": "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Output\\Latest Runs\\Step2\\config.step2.latest_run.json",
+  "reference_raster_path": "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Input\\Raster\\Predictors\\Topographic\\Filtered\\Makilala_TWI_Final_LPF_PRSTM51N.tif",
+  "output_probability_raster": "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Output\\Latest Runs\\Step3\\ml_dfi_probability_full_valid_predictor_domain.tif",
+  "predictor_columns": [
+    "twi",
+    "slope",
+    "profile_curvature",
+    "plan_curvature",
+    "ndvi",
+    "geomorphology",
+    "dugsurf",
+    "dstgsurf"
+  ],
+  "full_domain_shap": {
+    "enabled": true,
+    "method": "xgboost_pred_contribs",
+    "sampling_method": "deterministic_stratified_by_predicted_dfi_probability",
+    "probability_groups": {
+      "low_dfi": "P < 0.30",
+      "medium_dfi": "0.30 <= P < 0.70",
+      "high_dfi": "P >= 0.70"
+    },
+    "sample_group_counts": {
+      "low_dfi": 20000,
+      "medium_dfi": 20000,
+      "high_dfi": 20000
+    },
+    "sample_count": 60000,
+    "importance_path": "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Output\\Latest Runs\\Step3\\full_domain_shap_feature_importance.csv",
+    "sample_path": "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Output\\Latest Runs\\Step3\\full_domain_shap_sample.csv",
+    "mean_bias_contribution": 0.5703874230384827,
+    "contribution_output": "xgboost_raw_margin",
+    "feature_importance_plot_path": "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Output\\Latest Runs\\Step3\\full_domain_shap_feature_importance.png",
+    "summary_plot_path": "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Output\\Latest Runs\\Step3\\full_domain_shap_summary_beeswarm.png",
+    "dependence_plot_path": "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Output\\Latest Runs\\Step3\\full_domain_shap_dependence_plots.png"
+  },
+  "predicted_pixels": 13711832,
+  "valid_predictor_pixels": 13711832,
+  "probability_min": 0.0008480665856041014,
+  "probability_max": 0.9997075200080872,
+  "probability_mean": 0.6840582040498406
+}

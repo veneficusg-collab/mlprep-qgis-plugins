@@ -1,0 +1,41 @@
+{
+  "validation_date": "2026-07-27",
+  "executable_sha256": "dc93b9f567c89f818246cedf02e7fa9c99699a9e11a79e5f5091538516bff66b",
+  "validation_scope": {
+    "synthetic": "Projected 5 m D-Infinity east-flow raster tested with n=1 and n=2.",
+    "full_grid": "Current default Makilala inputs tested in temporary outputs with n=1 and n=8.",
+    "retained_baseline": "All five n=8 rasters compared block by block with the retained Latest Runs Step4 rasters."
+  },
+  "synthetic_result": {
+    "process_counts": [
+      1,
+      2
+    ],
+    "rasters_exactly_identical": true,
+    "runout_cells": 41,
+    "maximum_planimetric_flow_path_length_m": 200.0
+  },
+  "full_grid_result": {
+    "process_counts": [
+      1,
+      8
+    ],
+    "rasters_exactly_identical": true,
+    "retained_baseline_exactly_identical": true,
+    "rasters_compared": [
+      "dynamic_alpha",
+      "beta_angle",
+      "dfs",
+      "runout_mask",
+      "pure_depositional_mask"
+    ],
+    "runout_cells": 6910670,
+    "pure_depositional_cells": 645620,
+    "n1_engine_wall_seconds": 29.384,
+    "n1_wrapper_total_seconds": 30.057,
+    "n8_engine_wall_seconds": 13.005,
+    "n8_wrapper_total_seconds": 13.28
+  },
+  "historical_reference_lineage": "The retained baseline was previously validated against the archived Python reference. The current optimized executable is pixel-identical to that retained baseline; the archived Python file remains historical evidence, not a runtime fallback.",
+  "test_command": "RUN_STEP4_MPI_INTEGRATION=1 RUN_STEP4_FULL_REGRESSION=1 pytest tests/test_step4_mpi_integration.py"
+}

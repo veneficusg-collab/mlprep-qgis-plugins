@@ -1,0 +1,11 @@
+tensorflow
+numpy
+pandas
+geopandas
+scikit-learn
+keras-tuner
+imbalanced-learn
+matplotlib
+seaborn
+contextily
+scikeras

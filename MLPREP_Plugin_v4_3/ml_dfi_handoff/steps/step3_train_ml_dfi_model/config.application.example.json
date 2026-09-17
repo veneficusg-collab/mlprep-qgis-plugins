@@ -1,0 +1,19 @@
+{
+  "apply_ml_dfi_model": {
+    "model_path": "../../Sample Data/Output/Latest Runs/Step3/model_training_validation/trained_ml_dfi_model.pkl",
+    "metadata_path": "../../Sample Data/Output/Latest Runs/Step3/model_training_validation/model_metadata.json",
+    "predictor_config_json": "../step2_extract_pixel_samples/config.default.json",
+    "reference_raster_path": "../../Sample Data/Input/Raster/Predictors/Topographic/Filtered/Makilala_Slope_LPF_PRSTM51N.tif",
+    "output_dir": "../../Sample Data/Output/Latest Runs/Step3/domain_application_dfi",
+    "output_probability_raster": "ml_dfi_probability_full_valid_predictor_domain.tif",
+    "output_summary_json": "ml_dfi_probability_full_valid_predictor_domain_summary.json",
+    "output_nodata": -9999.0,
+    "window_height": 256,
+    "compress": "lzw",
+    "bigtiff": "IF_SAFER",
+    "write_full_domain_shap": true,
+    "full_domain_shap_sample_size": 60000,
+    "full_domain_shap_max_display_features": 12,
+    "full_domain_shap_random_seed": 42
+  }
+}

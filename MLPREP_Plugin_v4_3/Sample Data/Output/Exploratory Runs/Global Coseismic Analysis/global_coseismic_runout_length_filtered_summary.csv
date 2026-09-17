@@ -1,0 +1,13 @@
+statistic,value
+original_valid_count,73665
+original_p05_cutoff_m,8.1750885898
+original_p95_cutoff_m,309.71371364000026
+filtered_count,66297
+filtered_minimum_m,8.175319473
+filtered_maximum_m,309.640753
+filtered_mean_m,66.58906787879096
+filtered_p25_m,24.65553739
+filtered_median_m,42.75389513
+filtered_sample_std_m,61.99675378553929
+filtered_p75_m,85.32354179
+filtered_p95_m,210.1231397799999

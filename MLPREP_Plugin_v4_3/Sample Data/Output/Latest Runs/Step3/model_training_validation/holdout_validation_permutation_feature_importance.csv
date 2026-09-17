@@ -1,0 +1,9 @@
+feature,importance_mean_pr_auc_drop,importance_std_pr_auc_drop,baseline_pr_auc,importance_type,dataset,sample_count,n_repeats,rank
+dstgsurf,0.11514758530417106,0.00543706475223248,0.7795417007596445,permutation_mean_pr_auc_drop,holdout_validation,9446,5,1
+geomorphology,0.041267382644992814,0.0020047466495094982,0.7795417007596445,permutation_mean_pr_auc_drop,holdout_validation,9446,5,2
+profile_curvature,0.03343600832919724,0.0023144989667495666,0.7795417007596445,permutation_mean_pr_auc_drop,holdout_validation,9446,5,3
+twi,0.020921235657436154,0.0015806261499542722,0.7795417007596445,permutation_mean_pr_auc_drop,holdout_validation,9446,5,4
+plan_curvature,0.017460208513859522,0.001044334398731644,0.7795417007596445,permutation_mean_pr_auc_drop,holdout_validation,9446,5,5
+slope,0.005300949487738249,0.00023196248331085358,0.7795417007596445,permutation_mean_pr_auc_drop,holdout_validation,9446,5,6
+dugsurf,0.0018610056265029318,0.0014340945193105986,0.7795417007596445,permutation_mean_pr_auc_drop,holdout_validation,9446,5,7
+ndvi,0.0010359407190472015,0.0005559867235143882,0.7795417007596445,permutation_mean_pr_auc_drop,holdout_validation,9446,5,8

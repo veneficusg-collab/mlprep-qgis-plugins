@@ -1,0 +1,110 @@
+# Python runtime artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.pyright/
+.coverage
+htmlcov/
+.ipynb_checkpoints/
+
+# Local virtual environments
+.venv/
+.venv-*/
+.venv-local/
+.venv-runtime/
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Local centralized workflow settings and generated effective configs
+/config/local_config.json
+/config/.runtime/
+
+# Local editor and OS files
+.agents/
+.codex/
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+desktop.ini
+symbology-style.db
+
+# Stale GIS/application locks
+*.lock
+*.sr.lock
+
+# Sample data, run outputs, and generated artifacts
+Sample Data/
+sample data/
+analysis_outputs/
+archive/exploratory_outputs/
+dist/
+outputs/
+output/
+Output/
+Outputs/
+Old Runs/
+Latest Runs/
+**/Old Runs/
+**/Latest Runs/
+
+# Logs, profiles, and temporary working files
+logs/
+*.log
+*.prof
+*.tmp
+*.temp
+*.bak
+*~
+**/processing_log.txt
+
+# GIS rasters and sidecars
+*.tif
+*.tiff
+*.tfw
+*.aux.xml
+*.ovr
+*.tif.xml
+*.tiff.xml
+*.vat.cpg
+*.vat.dbf
+
+# Shapefiles and common GIS vector sidecars
+*.shp
+*.shx
+*.dbf
+*.prj
+*.cpg
+*.sbn
+*.sbx
+*.qix
+*.shp.xml
+*.gpkg
+*.gdb/
+
+# Large local GIS/project/archive files
+*.mxd
+*.aprx
+*.zip
+*.7z
+*.rar
+
+# Model-training artifacts
+models/
+*.joblib
+*.pkl
+*.pickle
+*.onnx
+
+# Step 4 C++/MPI local build and validation artifacts
+steps/step4_deposition_zone/cpp_mpi_port/build/
+steps/step4_deposition_zone/cpp_mpi_port/build_manual/*
+!steps/step4_deposition_zone/cpp_mpi_port/build_manual/step4_deposition_zone_mpi.exe
+steps/step4_deposition_zone/cpp_mpi_port/process_count_tests/
+steps/step4_deposition_zone/cpp_mpi_port/python_reference_tests/

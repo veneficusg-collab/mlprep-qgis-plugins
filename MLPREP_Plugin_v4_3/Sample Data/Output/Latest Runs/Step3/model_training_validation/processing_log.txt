@@ -1,0 +1,39 @@
+2026-07-27 16:01:15,043 [INFO] Starting Step 3 ML-DFI model training.
+2026-07-27 16:01:15,044 [INFO] Input sample table: E:\MLPREP\MLPREP\Objectives\Objective 4\Codes_V2\Sample Data\Output\Latest Runs\Step2\ml_dfi_pixel_samples.csv
+2026-07-27 16:01:15,044 [INFO] Official output directory: E:\MLPREP\MLPREP\Objectives\Objective 4\Codes_V2\Sample Data\Output\Latest Runs\Step3\model_training_validation
+2026-07-27 16:01:15,044 [INFO] Model type: xgboost
+2026-07-27 16:01:15,166 [INFO] Predictor column 'geomorphology' will be treated as categorical from CONFIG.
+2026-07-27 16:01:15,269 [INFO] Rows after cleaning: 31455
+2026-07-27 16:01:15,269 [INFO] Predictor columns retained: 8
+2026-07-27 16:01:15,269 [INFO] Predictor type split: numeric=7, categorical=1.
+2026-07-27 16:01:15,667 [INFO] Created grouped holdout split: training=22009 rows, holdout=9446 rows, actual_holdout_fraction=0.300.
+2026-07-27 16:01:15,667 [INFO] Holdout workflow training class counts: {0: 14625, 1: 7384}.
+2026-07-27 16:01:15,667 [INFO] Holdout workflow validation class counts: {0: 6285, 1: 3161}.
+2026-07-27 16:01:15,668 [INFO] Creating stratified_group_kfold validation splits inside the 70% training pool using group column 'landslide_id'.
+2026-07-27 16:01:15,792 [INFO] Stratified group fold 1 class counts: train={0: 11701, 1: 5907}, validation={0: 2924, 1: 1477}.
+2026-07-27 16:01:15,806 [INFO] Stratified group fold 2 class counts: train={0: 11700, 1: 5906}, validation={0: 2925, 1: 1478}.
+2026-07-27 16:01:15,819 [INFO] Stratified group fold 3 class counts: train={0: 11702, 1: 5908}, validation={0: 2923, 1: 1476}.
+2026-07-27 16:01:15,834 [INFO] Stratified group fold 4 class counts: train={0: 11696, 1: 5908}, validation={0: 2929, 1: 1476}.
+2026-07-27 16:01:15,851 [INFO] Stratified group fold 5 class counts: train={0: 11701, 1: 5907}, validation={0: 2924, 1: 1477}.
+2026-07-27 16:01:15,852 [INFO] Final model scope is holdout_training_split_after_group_cv; the saved model will be fit on 22009 rows after validation is estimated by grouped CV.
+2026-07-27 16:01:15,852 [INFO] Rows retained for final model fitting after split safeguards: 22009
+2026-07-27 16:01:16,025 [INFO] Starting XGBoost hyperparameter tuning with Optuna: trials=100, metric=PR_AUC, validation_mode=stratified_group_kfold, source=holdout_training_split, scale_pos_weight_reference=1.9806338028169015, tune_scale_pos_weight=True.
+2026-07-27 16:01:16,336 [INFO] Cached fold-local preprocessing for 5 Optuna folds; preprocessing will not be refit per trial.
+2026-07-27 16:04:08,227 [INFO] Finished Optuna tuning. Best PR_AUC=0.832519 from trial 89.
+2026-07-27 16:04:08,238 [INFO] Predictor preprocessing columns: numeric=7, categorical=1.
+2026-07-27 16:04:08,521 [INFO] Validation split 'fold_1' selected XGBoost n_estimators=35 from early stopping.
+2026-07-27 16:04:08,552 [INFO] Predictor preprocessing columns: numeric=7, categorical=1.
+2026-07-27 16:04:09,002 [INFO] Validation split 'fold_2' selected XGBoost n_estimators=78 from early stopping.
+2026-07-27 16:04:09,020 [INFO] Predictor preprocessing columns: numeric=7, categorical=1.
+2026-07-27 16:04:09,520 [INFO] Validation split 'fold_3' selected XGBoost n_estimators=101 from early stopping.
+2026-07-27 16:04:09,537 [INFO] Predictor preprocessing columns: numeric=7, categorical=1.
+2026-07-27 16:04:09,839 [INFO] Validation split 'fold_4' selected XGBoost n_estimators=19 from early stopping.
+2026-07-27 16:04:09,850 [INFO] Predictor preprocessing columns: numeric=7, categorical=1.
+2026-07-27 16:04:10,274 [INFO] Validation split 'fold_5' selected XGBoost n_estimators=70 from early stopping.
+2026-07-27 16:04:11,628 [INFO] Validated XGBoost boosting rounds from early stopping: [35, 78, 101, 19, 70]; final production n_estimators=70 using median_across_validation_folds.
+2026-07-27 16:04:11,629 [INFO] Predictor preprocessing columns: numeric=7, categorical=1.
+2026-07-27 16:04:16,723 [INFO] Wrote XGBoost SHAP contribution summary from 5000 sampled rows; mean bias contribution=0.956803.
+2026-07-27 16:04:18,039 [INFO] Wrote partial dependence summary for 8 predictors from 2500 sampled rows.
+2026-07-27 16:04:19,525 [INFO] Wrote partial dependence summary for 8 predictors from 2500 sampled rows.
+2026-07-27 16:04:23,400 [INFO] Independent performance should be reported from holdout_validation rows in model_metrics.csv. CV rows describe tuning/model-selection stability; the final_training row is diagnostic only.
+2026-07-27 16:04:23,400 [INFO] Finished Step 3 successfully.

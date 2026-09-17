@@ -1,0 +1,330 @@
+{
+  "step": "step0",
+  "purpose": "Source-slope-based baseline alpha prior for the dynamic-alpha DFI runout workflow.",
+  "input_slope_path": "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Input\\Raster\\Predictors\\Topographic\\Filtered\\Makilala_Slope_LPF_PRSTM51N.tif",
+  "output_alpha_path": "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Output\\Latest Runs\\Step0\\Makilala_BaselineAlpha_PRSTM51N.tif",
+  "output_class_path": "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Output\\Latest Runs\\Step0\\Makilala_BaselineAlpha_Class_PRSTM51N.tif",
+  "metadata_path": "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Output\\Latest Runs\\Step0\\Makilala_BaselineAlpha_Metadata.json",
+  "processing": {
+    "mode": "windowed",
+    "window_size_pixels": 1024,
+    "temporary_output_commit": true
+  },
+  "raster": {
+    "shape": [
+      3698,
+      5710
+    ],
+    "height": 3698,
+    "width": 5710,
+    "crs": "ESRI:102457",
+    "transform": [
+      5.0,
+      0.0,
+      719707.5,
+      0.0,
+      -5.0,
+      774782.5
+    ],
+    "resolution": [
+      5.0,
+      5.0
+    ],
+    "bounds": [
+      719707.5,
+      756292.5,
+      748257.5,
+      774782.5
+    ]
+  },
+  "lookup_table": [
+    {
+      "class_id": 0,
+      "interval": "slope < 10",
+      "alpha_degrees": null,
+      "calibration_n": 15,
+      "observed_alpha_median_degrees": 9.268,
+      "assignment_basis": "non_source_nodata_policy_override"
+    },
+    {
+      "class_id": 1,
+      "interval": "10 <= slope < 12",
+      "alpha_degrees": 9.0,
+      "calibration_n": null,
+      "observed_alpha_median_degrees": null,
+      "assignment_basis": "configured_lookup_table"
+    },
+    {
+      "class_id": 2,
+      "interval": "12 <= slope < 14",
+      "alpha_degrees": 11.0,
+      "calibration_n": null,
+      "observed_alpha_median_degrees": null,
+      "assignment_basis": "configured_lookup_table"
+    },
+    {
+      "class_id": 3,
+      "interval": "14 <= slope < 16",
+      "alpha_degrees": 13.0,
+      "calibration_n": null,
+      "observed_alpha_median_degrees": null,
+      "assignment_basis": "configured_lookup_table"
+    },
+    {
+      "class_id": 4,
+      "interval": "16 <= slope < 18",
+      "alpha_degrees": 15.0,
+      "calibration_n": null,
+      "observed_alpha_median_degrees": null,
+      "assignment_basis": "configured_lookup_table"
+    },
+    {
+      "class_id": 5,
+      "interval": "18 <= slope < 20",
+      "alpha_degrees": 17.0,
+      "calibration_n": null,
+      "observed_alpha_median_degrees": null,
+      "assignment_basis": "configured_lookup_table"
+    },
+    {
+      "class_id": 6,
+      "interval": "20 <= slope < 25",
+      "alpha_degrees": 19.0,
+      "calibration_n": 55,
+      "observed_alpha_median_degrees": 18.793,
+      "assignment_basis": "rounded_upper_interval_median_alpha"
+    },
+    {
+      "class_id": 7,
+      "interval": "25 <= slope < 30",
+      "alpha_degrees": 22.0,
+      "calibration_n": 108,
+      "observed_alpha_median_degrees": 21.898,
+      "assignment_basis": "rounded_upper_interval_median_alpha"
+    },
+    {
+      "class_id": 8,
+      "interval": "30 <= slope < 35",
+      "alpha_degrees": 25.0,
+      "calibration_n": 110,
+      "observed_alpha_median_degrees": 25.252,
+      "assignment_basis": "rounded_upper_interval_median_alpha"
+    },
+    {
+      "class_id": 9,
+      "interval": "35 <= slope < 40",
+      "alpha_degrees": 28.0,
+      "calibration_n": 115,
+      "observed_alpha_median_degrees": 27.874,
+      "assignment_basis": "rounded_upper_interval_median_alpha"
+    },
+    {
+      "class_id": 10,
+      "interval": "40 <= slope < 45",
+      "alpha_degrees": 29.0,
+      "calibration_n": 65,
+      "observed_alpha_median_degrees": 28.835,
+      "assignment_basis": "rounded_upper_interval_median_alpha"
+    },
+    {
+      "class_id": 11,
+      "interval": "slope >= 45",
+      "alpha_degrees": 30.0,
+      "calibration_n": 19,
+      "observed_alpha_median_degrees": [
+        30.218,
+        29.895
+      ],
+      "assignment_basis": "rounded_upper_interval_median_alpha"
+    }
+  ],
+  "calibration": {
+    "response": "clean DP1 observed alpha angle (a_obs_deg)",
+    "predictor": "mean source-area slope in degrees",
+    "source_area": "matched upper-30-percent non-depositional/source footprint",
+    "valid_observation_count": 564,
+    "association": {
+      "pearson_r": 0.7769277464,
+      "spearman_rho": 0.7618945631
+    },
+    "assignment_method": "Classes 1-5 use an assigned alpha one degree below the lower slope interval bound. Classes 6-11 use the rounded median alpha angle of the slope interval from the generated slope-alpha correlation line.",
+    "policy_exception": "Class 0 is written as alpha NoData to mark cells with slope below 10 degrees as non-source or very low initiation-potential cells, rather than applying its observed median or using alpha 0.",
+    "application_note": "Calibration uses source-area mean slope observations, while raster generation assigns the prior by local slope cell."
+  },
+  "statistics": {
+    "input_slope_degrees": {
+      "min": 7.318907364606275e-07,
+      "max": 73.41104125976562,
+      "mean": 13.966334095312428
+    },
+    "output_alpha_degrees": {
+      "min": 9.0,
+      "max": 30.0,
+      "mean": 18.33586527501484
+    }
+  },
+  "total_cell_count": 21115580,
+  "valid_cell_count": 13739341,
+  "input_nodata_cell_count": 7376239,
+  "non_source_class_zero_cell_count": 6534857,
+  "alpha_nodata_cell_count": 13911096,
+  "nodata_cell_count": 13911096,
+  "cell_count_per_class": {
+    "0": 6534857,
+    "1": 748870,
+    "2": 700951,
+    "3": 661981,
+    "4": 625326,
+    "5": 590937,
+    "6": 1314285,
+    "7": 969119,
+    "8": 659509,
+    "9": 448547,
+    "10": 269259,
+    "11": 215700
+  },
+  "percentage_per_class": {
+    "0": 47.5631036452185,
+    "1": 5.4505525410571005,
+    "2": 5.1017803546764,
+    "3": 4.818142296635624,
+    "4": 4.551353663905714,
+    "5": 4.3010578163828965,
+    "6": 9.565851811960997,
+    "7": 7.053606137295813,
+    "8": 4.8001501673187965,
+    "9": 3.2646907882990894,
+    "10": 1.9597664837054412,
+    "11": 1.5699442935436279
+  },
+  "class_summary": [
+    {
+      "class_id": 0,
+      "interval": "slope < 10",
+      "alpha_degrees": null,
+      "calibration_n": 15,
+      "observed_alpha_median_degrees": 9.268,
+      "assignment_basis": "non_source_nodata_policy_override",
+      "cell_count": 6534857,
+      "percentage_of_valid_cells": 47.5631036452185
+    },
+    {
+      "class_id": 1,
+      "interval": "10 <= slope < 12",
+      "alpha_degrees": 9.0,
+      "calibration_n": null,
+      "observed_alpha_median_degrees": null,
+      "assignment_basis": "configured_lookup_table",
+      "cell_count": 748870,
+      "percentage_of_valid_cells": 5.4505525410571005
+    },
+    {
+      "class_id": 2,
+      "interval": "12 <= slope < 14",
+      "alpha_degrees": 11.0,
+      "calibration_n": null,
+      "observed_alpha_median_degrees": null,
+      "assignment_basis": "configured_lookup_table",
+      "cell_count": 700951,
+      "percentage_of_valid_cells": 5.1017803546764
+    },
+    {
+      "class_id": 3,
+      "interval": "14 <= slope < 16",
+      "alpha_degrees": 13.0,
+      "calibration_n": null,
+      "observed_alpha_median_degrees": null,
+      "assignment_basis": "configured_lookup_table",
+      "cell_count": 661981,
+      "percentage_of_valid_cells": 4.818142296635624
+    },
+    {
+      "class_id": 4,
+      "interval": "16 <= slope < 18",
+      "alpha_degrees": 15.0,
+      "calibration_n": null,
+      "observed_alpha_median_degrees": null,
+      "assignment_basis": "configured_lookup_table",
+      "cell_count": 625326,
+      "percentage_of_valid_cells": 4.551353663905714
+    },
+    {
+      "class_id": 5,
+      "interval": "18 <= slope < 20",
+      "alpha_degrees": 17.0,
+      "calibration_n": null,
+      "observed_alpha_median_degrees": null,
+      "assignment_basis": "configured_lookup_table",
+      "cell_count": 590937,
+      "percentage_of_valid_cells": 4.3010578163828965
+    },
+    {
+      "class_id": 6,
+      "interval": "20 <= slope < 25",
+      "alpha_degrees": 19.0,
+      "calibration_n": 55,
+      "observed_alpha_median_degrees": 18.793,
+      "assignment_basis": "rounded_upper_interval_median_alpha",
+      "cell_count": 1314285,
+      "percentage_of_valid_cells": 9.565851811960997
+    },
+    {
+      "class_id": 7,
+      "interval": "25 <= slope < 30",
+      "alpha_degrees": 22.0,
+      "calibration_n": 108,
+      "observed_alpha_median_degrees": 21.898,
+      "assignment_basis": "rounded_upper_interval_median_alpha",
+      "cell_count": 969119,
+      "percentage_of_valid_cells": 7.053606137295813
+    },
+    {
+      "class_id": 8,
+      "interval": "30 <= slope < 35",
+      "alpha_degrees": 25.0,
+      "calibration_n": 110,
+      "observed_alpha_median_degrees": 25.252,
+      "assignment_basis": "rounded_upper_interval_median_alpha",
+      "cell_count": 659509,
+      "percentage_of_valid_cells": 4.8001501673187965
+    },
+    {
+      "class_id": 9,
+      "interval": "35 <= slope < 40",
+      "alpha_degrees": 28.0,
+      "calibration_n": 115,
+      "observed_alpha_median_degrees": 27.874,
+      "assignment_basis": "rounded_upper_interval_median_alpha",
+      "cell_count": 448547,
+      "percentage_of_valid_cells": 3.2646907882990894
+    },
+    {
+      "class_id": 10,
+      "interval": "40 <= slope < 45",
+      "alpha_degrees": 29.0,
+      "calibration_n": 65,
+      "observed_alpha_median_degrees": 28.835,
+      "assignment_basis": "rounded_upper_interval_median_alpha",
+      "cell_count": 269259,
+      "percentage_of_valid_cells": 1.9597664837054412
+    },
+    {
+      "class_id": 11,
+      "interval": "slope >= 45",
+      "alpha_degrees": 30.0,
+      "calibration_n": 19,
+      "observed_alpha_median_degrees": [
+        30.218,
+        29.895
+      ],
+      "assignment_basis": "rounded_upper_interval_median_alpha",
+      "cell_count": 215700,
+      "percentage_of_valid_cells": 1.5699442935436279
+    }
+  ],
+  "nodata": {
+    "alpha": -9999.0,
+    "class": -9999
+  },
+  "warnings": []
+}
