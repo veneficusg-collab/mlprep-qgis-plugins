@@ -433,6 +433,15 @@ def run_prediction():
             out_gdf, np.asarray(out_gdf["Wetness"], dtype=np.float64),
             os.path.join(obj2_dir, "Saturation_Ratio.tif"),
             rows, cols, transform, crs_wkt, valid_dem_mask)
+        # The PINN's own fos_layer, kept as a raster so Step 4 can refine the
+        # source mask with it instead of re-deriving a cell-scale FoS from the
+        # parameter rasters. The two disagree by roughly a factor of six: this
+        # one has a median near 1.4 with about a third of the area above 1.5,
+        # while the re-derived one averages 0.24 and puts over 99% below it.
+        fos_tif = _write_slope_unit_raster(
+            out_gdf, np.asarray(out_gdf["FactorOfSafety"], dtype=np.float64),
+            os.path.join(obj2_dir, "FactorOfSafety.tif"),
+            rows, cols, transform, crs_wkt, valid_dem_mask)
 
         # Friction-angle unit: a physically valid friction angle is below 90 degrees,
         # i.e. below pi/2 in radians. If every value fits under pi/2 it is radians.
@@ -448,6 +457,7 @@ def run_prediction():
             "output": main_output_path,
             "overall_tif": overall_tif,
             "susceptibility_tif": susceptibility_tif,
+            "factor_of_safety_tif": fos_tif,
             "cohesion_tif": cohesion_tif,
             "friction_angle_tif": friction_tif,
             "wetness_tif": wetness_tif,

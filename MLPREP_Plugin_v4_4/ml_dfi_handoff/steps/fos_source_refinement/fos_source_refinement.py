@@ -56,6 +56,12 @@ class SourceRefinementParams:
     output_fos_raster: Path
     output_source_mask_raster: Path
     output_summary_json: Path
+    # Optional precomputed per-cell Factor of Safety. When set, it is read
+    # straight off this raster and the infinite-slope equation below is not
+    # evaluated; the parameter rasters are still read for their diagnostics.
+    # Used to refine the source mask with the PINN's own fos_layer rather than
+    # a second, independently derived FoS.
+    factor_of_safety_raster: Path | None = None
     total_unit_weight_band: int = 1
     total_unit_weight_scale_to_kn_m3: float = 1.0
     total_unit_weight_resampling: str = "bilinear"
@@ -514,6 +520,26 @@ def run_source_refinement(params: SourceRefinementParams) -> dict[str, Any]:
                 slope_src,
                 resampling=params.total_unit_weight_resampling,
             )
+            factor_of_safety_grid = None
+            if params.factor_of_safety_raster is not None:
+                factor_of_safety_src = stack.enter_context(
+                    rasterio.open(params.factor_of_safety_raster)
+                )
+                if factor_of_safety_src.count != 1:
+                    raise ValueError(
+                        "Factor-of-safety raster must contain exactly one band."
+                    )
+                if factor_of_safety_src.crs is None:
+                    raise ValueError("Factor-of-safety raster must declare a CRS.")
+                input_grids["factor_of_safety"] = _input_grid_summary(
+                    factor_of_safety_src,
+                    band=1,
+                    resampling="nearest",
+                    scale_to_model_units=1.0,
+                )
+                factor_of_safety_grid = _aligned_vrt(
+                    stack, factor_of_safety_src, slope_src, resampling="nearest"
+                )
 
             with (
                 rasterio.open(
@@ -621,15 +647,22 @@ def run_source_refinement(params: SourceRefinementParams) -> dict[str, Any]:
                         & total_unit_weight_valid
                         & slope_valid
                     )
-                    fos, fos_valid = calculate_factor_of_safety(
-                        cohesion,
-                        friction,
-                        saturation,
-                        total_unit_weight,
-                        slope,
-                        combined_valid,
-                        friction_angle_unit=params.friction_angle_unit,
-                    )
+                    if factor_of_safety_grid is not None:
+                        # Precomputed FoS: its own NoData decides which cells are
+                        # resolved, not the parameter rasters' combined validity.
+                        fos, fos_valid = _read_float_window(
+                            factor_of_safety_grid, window
+                        )
+                    else:
+                        fos, fos_valid = calculate_factor_of_safety(
+                            cohesion,
+                            friction,
+                            saturation,
+                            total_unit_weight,
+                            slope,
+                            combined_valid,
+                            friction_angle_unit=params.friction_angle_unit,
+                        )
                     source_mask, diagnostic_masks = refine_source_mask(
                         susceptibility_valid,
                         slope_valid,
@@ -699,9 +732,17 @@ def run_source_refinement(params: SourceRefinementParams) -> dict[str, Any]:
                 "step": "fos_source_refinement",
                 "created_utc": datetime.now(timezone.utc).isoformat(),
                 "method": {
+                    "fos_source": (
+                        "precomputed factor_of_safety_raster"
+                        if params.factor_of_safety_raster is not None
+                        else "derived from parameter rasters"
+                    ),
                     "equation": (
-                        "FS = c'/(t*gamma_t*sin(theta)) + tan(phi')/tan(theta) "
-                        "- (m*gamma_w*tan(phi'))/(gamma_t*tan(theta))"
+                        "read from factor_of_safety_raster; the infinite-slope "
+                        "equation was not evaluated"
+                        if params.factor_of_safety_raster is not None
+                        else "FS = c'/(t*gamma_t*sin(theta)) + tan(phi')/tan(theta) "
+                             "- (m*gamma_w*tan(phi'))/(gamma_t*tan(theta))"
                     ),
                     "slope_basis": "unaggregated gridded slope angle",
                     "source_rule": (
@@ -829,6 +870,7 @@ def load_config(config_path: Path) -> SourceRefinementParams:
         "output_summary_json",
     }
     optional = {
+        "factor_of_safety_raster",
         "fos_threshold",
         "friction_angle_unit",
         "total_unit_weight_band",
@@ -877,6 +919,15 @@ def load_config(config_path: Path) -> SourceRefinementParams:
         ),
         output_summary_json=_resolve_config_path(
             config_dir, section["output_summary_json"], "output_summary_json"
+        ),
+        factor_of_safety_raster=(
+            _resolve_config_path(
+                config_dir,
+                section["factor_of_safety_raster"],
+                "factor_of_safety_raster",
+            )
+            if str(section.get("factor_of_safety_raster") or "").strip()
+            else None
         ),
         total_unit_weight_band=int(section.get("total_unit_weight_band", 1)),
         total_unit_weight_scale_to_kn_m3=float(

@@ -653,6 +653,21 @@ class MLDFIDepositionWorker(QThread):
         # source zeros survive and get blended into real cells. Mask them first.
         bulk_density_path = self._sanitise_bulk_density(fi["bulk_density"], fos_dir)
 
+        # Prefer the PINN's own slope-unit Factor of Safety over re-deriving one
+        # from the parameter rasters. The two disagree by roughly six times: the
+        # PINN's has a median near 1.4 with about a third of the area above the
+        # 1.5 threshold, while the re-derived cell-scale FoS averages 0.24 and
+        # puts over 99% below it, which makes the refinement a no-op. The
+        # parameter rasters are still passed through for their diagnostics.
+        pinn_fos = fi.get("factor_of_safety")
+        if pinn_fos and os.path.exists(pinn_fos):
+            self.log.emit("   > Refining the source mask with the PINN's own "
+                          "FactorOfSafety raster")
+        else:
+            pinn_fos = None
+            self.log.emit("   > No PINN FactorOfSafety raster available; deriving a "
+                          "cell-scale FoS from the parameter rasters instead")
+
         config = {
             "susceptibility_raster": fi["susceptibility"],
             "cohesion_raster": fi["cohesion"],
@@ -672,6 +687,7 @@ class MLDFIDepositionWorker(QThread):
             "output_fos_raster": os.path.join(fos_dir, "cell_scale_factor_of_safety.tif"),
             "output_source_mask_raster": refined_mask,
             "output_summary_json": summary_path,
+            "factor_of_safety_raster": pinn_fos,
             "float_nodata": -9999.0,
             "mask_nodata": 255,
             "block_rows": 256,
@@ -2549,6 +2565,10 @@ class UnifiedPluginDialog(QMainWindow):
                 
                 fos_inputs = {
                     "susceptibility": result_json.get("susceptibility_tif"),
+                    # The PINN's own fos_layer. When present, the source mask is
+                    # refined with it rather than with a second FoS re-derived
+                    # from the parameter rasters.
+                    "factor_of_safety": result_json.get("factor_of_safety_tif"),
                     "cohesion": result_json.get("cohesion_tif"),
                     "friction_angle": result_json.get("friction_angle_tif"),
                     "wetness": result_json.get("wetness_tif"),
