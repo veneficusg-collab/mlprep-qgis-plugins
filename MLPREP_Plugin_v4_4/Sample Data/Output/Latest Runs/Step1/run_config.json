@@ -1,0 +1,69 @@
+{
+  "generated_utc": "2026-07-27T07:57:49.721622+00:00",
+  "script": "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\steps\\step1_prepare_inventory_labels\\step1_prepare_inventory_labels.py",
+  "config": {
+    "landslide_polygon_path": "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Output\\Latest Runs\\Step00_DP1\\dp1.gpkg|layername=dp1_landslide_polygons_clean",
+    "dem_path": "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Input\\Raster\\Shared Inputs\\Makilala_DEM_Fill_PRSTM51N.tif",
+    "output_dir": "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Output\\Latest Runs\\Step1",
+    "landslide_id_field": "",
+    "depositional_percentile": 15,
+    "non_depositional_percentile": 30,
+    "nodata_value": -9999,
+    "output_pixel_type": "int16",
+    "min_valid_dem_cells": 5,
+    "all_touched": false,
+    "parallel_processing": true,
+    "max_workers": 4
+  },
+  "dem_grid": {
+    "width": 5710,
+    "height": 3698,
+    "resolution": [
+      5.0,
+      5.0
+    ],
+    "crs": "ESRI:102457",
+    "transform": [
+      5.0,
+      0.0,
+      719707.5,
+      0.0,
+      -5.0,
+      774782.5
+    ]
+  },
+  "diagnostics": {
+    "landslide_feature_count": 487,
+    "landslide_id_source": "internal_id",
+    "landslides_reprojected_to_dem_crs": false,
+    "multipart_feature_count": 0,
+    "processed_polygons": 486,
+    "skipped_polygons": 1,
+    "low_threshold_min": 111.86574172973633,
+    "low_threshold_max": 1530.0851135253906,
+    "low_threshold_mean": 661.5185717045034,
+    "low_threshold_median": 651.0394515991211,
+    "high_threshold_min": 124.2928237915039,
+    "high_threshold_max": 1588.6974487304688,
+    "high_threshold_mean": 684.6146022372776,
+    "high_threshold_median": 673.844091796875,
+    "depositional_cells": 10606,
+    "non_depositional_cells": 20982,
+    "uncertain_cells": 37962,
+    "depositional_percentile": 15.0,
+    "non_depositional_percentile": 30.0,
+    "computed_high_threshold_percentile": 70.0,
+    "parallel_processing_requested": true,
+    "parallel_processing_used": true,
+    "polygon_worker_count": 4,
+    "depositional_percentage_deviation_gt_5pp_polygons": 0,
+    "non_depositional_percentage_deviation_gt_5pp_polygons": 11,
+    "total_raster_cells": 21115580,
+    "valid_non_depositional_cells": 20982,
+    "nodata_cells": 21083992,
+    "depositional_non_depositional_overlap_cells": 0,
+    "uncertain_labeled_overlap_cells": 0,
+    "landslide_id_cells": 69550,
+    "landslide_id_unique_values": 486
+  }
+}

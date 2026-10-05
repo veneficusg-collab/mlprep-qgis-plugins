@@ -1,0 +1,464 @@
+#pinn_inference.py
+
+import sys
+import os
+import json
+import numpy as np
+import pandas as pd
+import geopandas as gpd
+from pathlib import Path
+
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+os.environ["TF_DETERMINISTIC_OPS"] = "1"
+import tensorflow as tf
+
+import rasterio
+from rasterio.features import rasterize as rio_rasterize
+
+# Ensure the current directory is in sys.path to access py_files
+current_dir = os.path.dirname(os.path.abspath(__file__))
+if current_dir not in sys.path:
+    sys.path.insert(0, current_dir)
+
+try:
+    from py_files.helpers import add_soil_texture_index
+    from py_files.data import (
+        preprocessing_v2,
+        apply_log_transform,
+        apply_clip_thresholds,
+        dataframe_to_dataset,
+    )
+    from py_files.GallenModel import CriticalAcceleration, DisplacementIntermediate, FosLayer
+    from py_files.GallenModel_v1 import (
+        NewmarkActivation, DisplacementLayerRainFall, WetnessLayer,
+        ClipLayer, CohesionLayer, InternalFrictionLayer, LogitLayer
+    )
+    from py_files.GallenModel_v3 import HydraulicConductivityLayerV3
+    from py_files.Landslidev2_Old import DiceCrossEntropyLoss
+except ImportError as e:
+    print(json.dumps({"status": "error", "message": f"Import Error: {e}"}))
+    sys.exit(1)
+
+
+# ---------------------------------------------------------
+# Susceptibility rating cutoff used to decide which slope units are
+# "susceptible" for the FoS source refinement (Objective 2 -> Step 4).
+# Slope units with Hazard_Susceptibility >= this value are susceptible;
+# all others become NoData (= non-susceptible) in the susceptibility raster.
+# CONFIRM THIS VALUE with the Objective 2 classification.
+# ---------------------------------------------------------
+SUSCEPTIBILITY_THRESHOLD = 0.5
+RASTER_NODATA = -9999.0
+
+
+# ---------------------------------------------------------
+# LogitLayer definition to fix the deserialization error
+# ---------------------------------------------------------
+@tf.keras.utils.register_keras_serializable(package="Custom")
+class LogitLayer(tf.keras.layers.Layer):
+    """Maps probabilities [0, 1] to logits [-inf, inf] using log(p / (1 - p))."""
+    def __init__(self, eps=1e-6, **kwargs):
+        super(LogitLayer, self).__init__(**kwargs)
+        self.eps = eps
+
+    def call(self, inputs):
+        # Clip to avoid log(0) or division by zero
+        p = tf.clip_by_value(inputs, self.eps, 1.0 - self.eps)
+        return tf.math.log(p / (1.0 - p))
+
+    def get_config(self):
+        config = super().get_config()
+        config.update({"eps": self.eps})
+        return config
+
+    @classmethod
+    def from_config(cls, config):
+        return cls(**config)
+
+
+# Columns to drop during preprocessing if they exist
+COLUMNS_DROP = [
+    "Landslide1", "descriptio", "sus_pinn_ground truth", "ds",
+    "cohesion", "internal_friction", "sus_pinn_landslide",
+    "confusion", "landslide_preds", "landslide_probability",
+    "Lithology", "LITHO", "Geomorphology", "LITHODESC",
+    "LITHO_2", "LITHODESC_2", "value",
+]
+
+
+def _write_slope_unit_raster(gdf, values, out_path, rows, cols, transform, crs_wkt, valid_dem_mask):
+    """Burn one per-slope-unit value onto the DEM grid.
+
+    Slope units whose value is NaN/inf are not burned, so they stay NoData,
+    as does everything outside the DEM's valid terrain."""
+    shapes = [
+        (geom, float(v))
+        for geom, v in zip(gdf.geometry, values)
+        if geom is not None and not geom.is_empty and np.isfinite(v)
+    ]
+    if shapes:
+        burned = rio_rasterize(
+            shapes,
+            out_shape=(rows, cols),
+            transform=transform,
+            fill=RASTER_NODATA,
+            dtype="float32",
+        )
+    else:
+        burned = np.full((rows, cols), RASTER_NODATA, dtype=np.float32)
+    burned[~valid_dem_mask] = RASTER_NODATA
+
+    with rasterio.open(
+        out_path, "w",
+        driver="GTiff",
+        height=rows, width=cols,
+        count=1,
+        dtype="float32",
+        crs=crs_wkt,
+        transform=transform,
+        nodata=RASTER_NODATA,
+        compress="lzw",
+        tiled=True,
+        BIGTIFF="IF_SAFER",
+    ) as dst:
+        dst.write(burned, 1)
+    del burned
+    return out_path
+
+
+def run_prediction():
+    try:
+        # 1. Parse Arguments from the QGIS Wrapper
+        raw_gpkg_path = sys.argv[1]
+        clean_gpkg_path = raw_gpkg_path.split('|')[0]
+        model_path = sys.argv[2]
+        output_gpkg = sys.argv[3]
+        dem_template_path = sys.argv[4]
+        
+        # Locate the manifest json
+        manifest_path = os.path.join(current_dir, "feature_manifests", "v1_cotabato_transforms_production.json")
+        if not os.path.exists(manifest_path):
+            manifest_path = os.path.join(os.path.dirname(model_path), "v1_cotabato_transforms_production.json")
+            
+        base_dir = os.path.dirname(clean_gpkg_path)
+        
+        # Determine the Zonal stats GPKG path (from Go pipeline)
+        if base_dir.endswith("Zonal_Results"):
+            zonal_path = os.path.join(base_dir, "Merged_PINN_Features.gpkg")
+        else:
+            zonal_path = os.path.join(base_dir, "Zonal_Results", "Merged_PINN_Features.gpkg")
+        if not os.path.exists(zonal_path):
+            zonal_path = os.path.join(base_dir, "Merged_PINN_Features.gpkg")
+
+        # 2. Setup Custom Objects and Load Model
+        custom_objects = {
+            "NewmarkActivation": NewmarkActivation,
+            "DisplacementLayerRainFall": DisplacementLayerRainFall,
+            "WetnessLayer": WetnessLayer,
+            "ClipLayer": ClipLayer,
+            "CohesionLayer": CohesionLayer,
+            "InternalFrictionLayer": InternalFrictionLayer,
+            "CriticalAcceleration": CriticalAcceleration,
+            "DisplacementIntermediate": DisplacementIntermediate,
+            "FosLayer": FosLayer,
+            "HydraulicConductivityLayerV3": HydraulicConductivityLayerV3,
+            "DiceCrossEntropyLoss": DiceCrossEntropyLoss,
+            "Custom>LogitLayer": LogitLayer,
+        }
+        
+        for name, cls in custom_objects.items():
+            tf.keras.utils.get_custom_objects()[name] = cls
+            tf.keras.utils.get_custom_objects()[f"Custom>{name}"] = cls
+
+        model = tf.keras.models.load_model(model_path, compile=False, custom_objects=custom_objects)
+        input_cols = [inp.name.split(':')[0] for inp in model.inputs]
+        
+        # 3. Load GPKG
+        gdf_raw = gpd.read_file(zonal_path)
+        
+        # Safely rename Go Engine outputs to Keras expected inputs
+        rename_dict = {}
+        for col in gdf_raw.columns:
+            cl = col.lower()
+            if 'slope' in cl: rename_dict[col] = 'Slope_mean'
+            elif 'clay' in cl: rename_dict[col] = 'Clay_mean'
+            elif 'sand' in cl: rename_dict[col] = 'Sand_mean'
+            elif 'silt' in cl: rename_dict[col] = 'Silt_mean'
+            elif 'elev' in cl: rename_dict[col] = 'Elev_mean'
+            elif 'soilth' in cl: rename_dict[col] = 'SoilThc_mean'
+            elif 'prc' in cl: rename_dict[col] = 'Prc_mean'
+            elif 'pga' in cl: rename_dict[col] = 'PGA2_max'
+            elif 'contributing' in cl: rename_dict[col] = 'ContributingFactor_mean'
+            elif 'buk' in cl or 'bulk' in cl: rename_dict[col] = 'BUK_mean'
+            elif 'type' in cl: rename_dict[col] = 'type'
+            
+        gdf_raw.rename(columns=rename_dict, inplace=True)
+
+        # ---------------------------------------------------------
+        # FIX 1: Bulk Density Unit Conversion
+        # If values are > 50, they are likely in cg/cm^3. 
+        # Multiply by 0.0981 to convert to kN/m^3 for the physics engine.
+        # ---------------------------------------------------------
+        if 'BUK_mean' in gdf_raw.columns:
+            gdf_raw['BUK_mean'] = pd.to_numeric(gdf_raw['BUK_mean'], errors='coerce')
+            gdf_raw.loc[gdf_raw['BUK_mean'] > 50, 'BUK_mean'] = gdf_raw['BUK_mean'] * 0.0981
+
+        # ---------------------------------------------------------
+        # FIX 2: Soil Type / Lithology Catcher
+        # If the raster outputs numerical codes (like 45.0) instead of strings,
+        # override it with "Unknown" so the network relies on the Sand/Silt/Clay percentages instead.
+        # ---------------------------------------------------------
+        if 'type' in gdf_raw.columns:
+            gdf_raw['type'] = gdf_raw['type'].astype(str)
+            # If the string is just a number (e.g., "45.0"), mark it unknown
+            gdf_raw.loc[gdf_raw['type'].str.replace('.', '', 1).str.isnumeric(), 'type'] = "Unknown"
+        
+        # Absolute safety net for the preprocessor
+        if 'Slope_mean' not in gdf_raw.columns:
+            gdf_raw['Slope_mean'] = 15.0
+        if 'type' not in gdf_raw.columns:
+            gdf_raw['type'] = "Unknown"
+            
+        # Safely run preprocessing_v2
+        valid_drop = [c for c in COLUMNS_DROP if c in gdf_raw.columns]
+        df, columns, numeric_cols, _, _ = preprocessing_v2(
+            gdf_raw, columns_drop=valid_drop, track_imputation=True
+        )
+        
+        # Preserve Geometry for the final GPKG output
+        geometry = df.geometry.copy()
+        crs = df.crs
+        
+        # Add indexing and metadata
+        try:
+            df = add_soil_texture_index(df[columns].copy())
+        except Exception as e:
+            print(f"[WARN] add_soil_texture_index failed: {e}", flush=True)
+
+        # 4. Replay Production Manifest Transforms (Safe Fallback)
+        if os.path.exists(manifest_path):
+            with open(manifest_path) as f:
+                transform_meta = json.load(f)
+            
+            log_cols = transform_meta.get("log_transformed_cols", [])
+            clip_thresh = transform_meta.get("clip_thresholds", {})
+            
+            if log_cols:
+                df = apply_log_transform(df, log_cols)
+            if clip_thresh:
+                df = apply_clip_thresholds(df, clip_thresh)
+        else:
+            print(f"[WARN] Manifest not found at {manifest_path}. Skipping data scaling.", flush=True)
+
+        # ---------------------------------------------------------
+        # Explicit Type-Casting to Prevent TensorFlow Crashes
+        # ---------------------------------------------------------
+        for exp_col in input_cols:
+            if exp_col not in df.columns:
+                print(f"[WARN] Imputing missing required input: {exp_col}", flush=True)
+                if 'type' in exp_col.lower() or exp_col == 'LITHO':
+                    df[exp_col] = "Unknown"
+                elif 'idx' in exp_col.lower():
+                    df[exp_col] = 4 
+                else:
+                    df[exp_col] = 0.001
+                    
+            # Force Data Types
+            if 'type' in exp_col.lower() or exp_col == 'LITHO':
+                df[exp_col] = df[exp_col].astype(str)
+            elif 'idx' in exp_col.lower():
+                df[exp_col] = pd.to_numeric(df[exp_col], errors='coerce').fillna(4).astype('int32')
+            else:
+                df[exp_col] = pd.to_numeric(df[exp_col], errors='coerce').fillna(0.001).astype('float32')
+            
+        # 5. Predict (Hazard Map Susceptibility)
+        df["landslide"] = 0 
+        ds = dataframe_to_dataset(
+            df[input_cols + ["landslide"]].copy(), shuffle=False, batch_size=128
+        )
+        
+        out = model.predict(ds, verbose=0)
+        susceptibility = out["final_head"].flatten() if isinstance(out, dict) else out.flatten()
+
+        # 6. Extract Intermediate Physics for DFI Calculations
+        physics_layers = {
+            "fos": "fos_layer",
+            "displacement": "displacement_layer",
+            "cohesion": "cohesion_layer",
+            "internal_friction": "internal_friction"
+        }
+        
+        # Dynamically locate the wetness layer name safely
+        wetness_layer_name = None
+        for l in model.layers:
+            if "wetness" in l.name.lower():
+                wetness_layer_name = l.name
+                break
+        if wetness_layer_name:
+            physics_layers["wetness"] = wetness_layer_name
+
+        outputs_dict = {k: model.get_layer(v).output for k, v in physics_layers.items()}
+        physics_extractor = tf.keras.Model(inputs=model.inputs, outputs=outputs_dict)
+        phys = physics_extractor.predict(ds, verbose=0)
+
+        # 7. Assemble Output GeoDataFrame
+        out_gdf = gpd.GeoDataFrame(df.copy(), geometry=geometry, crs=crs)
+        
+        # Original PINN outputs for Hazard Mapping
+        out_gdf["Hazard_Susceptibility"] = susceptibility
+        out_gdf["FactorOfSafety"] = np.asarray(phys["fos"]).reshape(len(out_gdf), -1)[:, 0]
+        out_gdf["Displacement"] = np.asarray(phys["displacement"]).reshape(len(out_gdf), -1)[:, 0]
+        out_gdf["Cohesion"] = np.asarray(phys["cohesion"]).reshape(len(out_gdf), -1)[:, 0]
+        out_gdf["Internal_Friction"] = np.asarray(phys["internal_friction"]).reshape(len(out_gdf), -1)[:, 0]
+
+        if "wetness" in phys:
+            m_wetness = np.asarray(phys["wetness"]).reshape(len(out_gdf), -1)[:, 0]
+        else:
+            print("[WARN] Could not find wetness layer, using m=1.0 (fully saturated) for DFI FoS.", flush=True)
+            m_wetness = np.ones(len(out_gdf))
+
+        # Keep the saturation ratio m so it can be rasterized for the FoS source refinement.
+        out_gdf["Wetness"] = m_wetness
+
+        # ==============================================================================
+        # NEW: Calculate DFI-specific Factor of Safety (FoS_DFI)
+        # ==============================================================================
+        # Constrain minimums to prevent division by zero
+        c_prime = np.maximum(out_gdf["Cohesion"], 0.001)
+        phi_prime = np.radians(np.maximum(out_gdf["Internal_Friction"], 0.001))
+        t = np.maximum(df["SoilThc_mean"], 0.001)
+        gamma_t = np.maximum(df["BUK_mean"], 0.001) # Already converted to kN/m3
+        gamma_w = 9.81
+        theta = np.radians(np.maximum(df["Slope_mean"], 0.001)) 
+
+        term1 = (c_prime / t) * (1.0 / (gamma_t * np.sin(theta)))
+        term2 = np.tan(phi_prime) / np.tan(theta)
+        term3 = (m_wetness * gamma_w * np.tan(phi_prime)) / (gamma_t * np.tan(theta))
+
+        fs_dfi = term1 + term2 - term3
+        fs_dfi = np.clip(fs_dfi, 0.01, 10.0) # Constrain to reasonable analytical bounds
+        
+        out_gdf["FoS_DFI"] = fs_dfi
+
+        # ------------------------------------------------------------------------------
+        # FILTER: Susceptibility_DFI keeps the PINN susceptibility, but strictly 
+        # filters out stable slopes (FoS_DFI >= 1.25). 
+        # (Slope < 10 is already filtered out by preprocessing)
+        # ------------------------------------------------------------------------------
+        out_gdf["Susceptibility_DFI"] = np.where(fs_dfi < 1.25, susceptibility, 0.0)
+        # ==============================================================================
+
+        # Save to Output GPKG
+        main_output_path = output_gpkg
+        if os.path.exists(main_output_path): 
+            os.remove(main_output_path)
+        
+        out_gdf.to_file(main_output_path, driver="GPKG")
+
+        # 8. OVERALL OUTPUT: Rasterize the NEW DFI Susceptibility for Step 4
+        overall_dir = os.path.join(base_dir, "overall_output")
+        os.makedirs(overall_dir, exist_ok=True)
+        overall_tif = os.path.join(overall_dir, "Overall_Output.tif")
+
+        with rasterio.open(dem_template_path) as src:
+            dem_data = src.read(1)
+            dem_nodata = src.nodata
+            transform = src.transform
+            cols = src.width
+            rows = src.height
+
+        # Create a boolean mask of valid DEM terrain (excluding true boundary NoData)
+        valid_dem_mask = np.isfinite(dem_data)
+        if dem_nodata is not None:
+            valid_dem_mask &= ~np.isclose(dem_data, dem_nodata)
+        del dem_data
+
+        shapes = (
+            (geom, value)
+            for geom, value in zip(out_gdf.geometry, out_gdf["Susceptibility_DFI"]) # 🟢 Burn the DFI Susceptibility!
+            if geom is not None and not geom.is_empty
+        )
+
+        # 🟢 Background fill = 0.0 (low hazard, but valid terrain for runout)
+        burned = rio_rasterize(
+            shapes,
+            out_shape=(rows, cols),
+            transform=transform,
+            fill=0.0,
+            dtype="float32"
+        )
+
+        # 🟢 Keep true DEM NoData (outside the study area boundary) as -9999.0
+        burned[~valid_dem_mask] = -9999.0
+
+        crs_wkt = out_gdf.crs.to_wkt() if out_gdf.crs else None
+
+        with rasterio.open(
+            overall_tif, "w",
+            driver="GTiff",
+            height=rows, width=cols,
+            count=1,
+            dtype="float32",
+            crs=crs_wkt,
+            transform=transform,
+            nodata=-9999.0
+        ) as dst:
+            dst.write(burned, 1)
+        del burned
+
+        # 9. OBJECTIVE 2 RASTERS for fos_source_refinement.py
+        #    Susceptibility: 1 on susceptible slope units, NoData elsewhere.
+        #    Cohesion / Internal_Friction / Wetness: per-slope-unit PINN values.
+        obj2_dir = os.path.join(overall_dir, "objective2_rasters")
+        os.makedirs(obj2_dir, exist_ok=True)
+
+        hazard = np.asarray(out_gdf["Hazard_Susceptibility"], dtype=np.float64)
+        susceptible_flag = np.where(hazard >= SUSCEPTIBILITY_THRESHOLD, 1.0, np.nan)
+        n_susceptible = int(np.count_nonzero(np.isfinite(susceptible_flag)))
+        print(f"[INFO] Susceptible slope units (Hazard_Susceptibility >= {SUSCEPTIBILITY_THRESHOLD}): "
+              f"{n_susceptible} of {len(out_gdf)}", flush=True)
+
+        susceptibility_tif = _write_slope_unit_raster(
+            out_gdf, susceptible_flag, os.path.join(obj2_dir, "Susceptibility.tif"),
+            rows, cols, transform, crs_wkt, valid_dem_mask)
+        cohesion_tif = _write_slope_unit_raster(
+            out_gdf, np.asarray(out_gdf["Cohesion"], dtype=np.float64),
+            os.path.join(obj2_dir, "Cohesion.tif"),
+            rows, cols, transform, crs_wkt, valid_dem_mask)
+        friction_tif = _write_slope_unit_raster(
+            out_gdf, np.asarray(out_gdf["Internal_Friction"], dtype=np.float64),
+            os.path.join(obj2_dir, "Internal_Friction_Angle.tif"),
+            rows, cols, transform, crs_wkt, valid_dem_mask)
+        wetness_tif = _write_slope_unit_raster(
+            out_gdf, np.asarray(out_gdf["Wetness"], dtype=np.float64),
+            os.path.join(obj2_dir, "Saturation_Ratio.tif"),
+            rows, cols, transform, crs_wkt, valid_dem_mask)
+
+        # Friction-angle unit: a physically valid friction angle is below 90 degrees,
+        # i.e. below pi/2 in radians. If every value fits under pi/2 it is radians.
+        friction_vals = np.asarray(out_gdf["Internal_Friction"], dtype=np.float64)
+        friction_vals = friction_vals[np.isfinite(friction_vals)]
+        friction_max = float(friction_vals.max()) if friction_vals.size else 0.0
+        friction_unit = "radians" if friction_max <= (np.pi / 2.0) else "degrees"
+        print(f"[INFO] Internal friction max {friction_max:.4f} -> treated as {friction_unit}", flush=True)
+
+        # 10. Return paths to UI Wrapper
+        output_json = {
+            "status": "success",
+            "output": main_output_path,
+            "overall_tif": overall_tif,
+            "susceptibility_tif": susceptibility_tif,
+            "cohesion_tif": cohesion_tif,
+            "friction_angle_tif": friction_tif,
+            "wetness_tif": wetness_tif,
+            "friction_angle_unit": friction_unit,
+            "susceptibility_threshold": SUSCEPTIBILITY_THRESHOLD,
+        }
+        print(json.dumps(output_json))
+
+    except Exception as e:
+        import traceback
+        print(json.dumps({"status": "error", "message": str(e), "traceback": traceback.format_exc()}))
+
+if __name__ == "__main__":
+    run_prediction()

@@ -1,0 +1,45 @@
+# Virtualenv, caches and scratch data -- never belongs in the repo.
+venv/
+roi_data/
+__pycache__/
+*.pyc
+.DS_Store
+
+# Sample Data rasters larger than 50 MB (GitHub's own warning threshold).
+# These 33 files are 2.58 GB of the plugin's 2.93 GB, and near-identical copies
+# are already tracked under MLPREP_Plugin_v4_3/. Everything else in Sample Data
+# -- the .tfw world files, the .aux.xml statistics and the .xml ArcGIS lineage
+# that documents how each predictor was built -- is small and stays tracked.
+Sample Data/Input/Raster/Predictors/Topographic/Filtered/Makilala_DStGSurf_LPF_PRSTM51N.tif
+Sample Data/Input/Raster/Predictors/Topographic/Filtered/Makilala_DUGSurf_LPF_PRSTM51N.tif
+Sample Data/Input/Raster/Predictors/Topographic/Filtered/Makilala_NDVI_LPF_PRSTM51N.tif
+Sample Data/Input/Raster/Predictors/Topographic/Filtered/Makilala_PlanCurv_LPF_PRSTM51N.tif
+Sample Data/Input/Raster/Predictors/Topographic/Filtered/Makilala_ProfCurv_LPF_PRSTM51N.tif
+Sample Data/Input/Raster/Predictors/Topographic/Filtered/Makilala_Slope_LPF_PRSTM51N.tif
+Sample Data/Input/Raster/Predictors/Topographic/Filtered/Makilala_TWI_Final_LPF_PRSTM51N.tif
+Sample Data/Input/Raster/Predictors/Topographic/Makilala_DStGSurf_PRSTM51N.tif
+Sample Data/Input/Raster/Predictors/Topographic/Makilala_DUGSurf_PRSTM51N.tif
+Sample Data/Input/Raster/Predictors/Topographic/Makilala_NDVI_PRSTM51N.tif
+Sample Data/Input/Raster/Predictors/Topographic/Makilala_PlanCurv_PRSTM51N.tif
+Sample Data/Input/Raster/Predictors/Topographic/Makilala_ProfCurv_PRSTM51N.tif
+Sample Data/Input/Raster/Predictors/Topographic/Makilala_PtS_PRSTM51N.tif
+Sample Data/Input/Raster/Predictors/Topographic/Makilala_Slope_PRSTM51N.tif
+Sample Data/Input/Raster/Predictors/Topographic/Makilala_TWI_Final_PRSTM51N.tif
+Sample Data/Input/Raster/Shared Inputs/Makilala_DEM_Fill_PRSTM51N.tif
+Sample Data/Input/Raster/Shared Inputs/Makilala_DFD_PRSTM51N.tif
+Sample Data/Input/Raster/Shared Inputs/Makilala_DFI_PRSTM51N.tif
+Sample Data/Input/Raster/Step4 Inputs/Makilala_AlphaRaster_PRSTM51N.tif
+Sample Data/Input/Raster/Step6 Inputs/Makilala_Slope_LPF_PRSTM51N.tif
+Sample Data/Input/Raster/Utils/PRSTM/Makilala_DEM_Buff_PRSTM51N.tif
+Sample Data/Input/Raster/Utils/PRSTM/Makilala_DEM_Fill_Buff_PRSTM51N.tif
+Sample Data/Input/Raster/Utils/PRSTM/Makilala_DFD_Buff_PRSTM51N.tif
+Sample Data/Input/Raster/Utils/PRSTM/Makilala_DSG_Buff_PRSTM51N.tif
+Sample Data/Input/Raster/Utils/PRSTM/Makilala_DSG_Buff_minchanged_PRSTM51N.tif
+Sample Data/Input/Raster/Utils/PRSTM/Makilala_DUG_Buff_PRSTM51N.tif
+Sample Data/Input/Raster/Utils/PRSTM/Makilala_SCAFull_Buff_PRSTM51N.tif
+Sample Data/Input/Raster/Utils/PRSTM/Makilala_TWI_Buff_PRSTM51N.tif
+Sample Data/Input/Raster/Utils/PRSTM/Makilala_TWI_Buff_minchanged_PRSTM51N.tif
+Sample Data/Output/Latest Runs/Step3/domain_application_dfi/ml_dfi_probability_full_valid_predictor_domain.tif
+Sample Data/Output/Latest Runs/Step6/step6_height_above_stream_m.tif
+Sample Data/Output/Test_Run/ml_dfi_probability_full_valid_predictor_domain.tif
+model_lsi/default/best.keras

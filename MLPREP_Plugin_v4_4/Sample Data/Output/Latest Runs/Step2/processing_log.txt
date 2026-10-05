@@ -1,0 +1,65 @@
+2026-07-27 15:59:20,809 [INFO] Using PROJ data directory: E:\MLPREP\MLPREP\Objectives\Objective 4\Codes_V2\.venv-local\Lib\site-packages\rasterio\proj_data
+2026-07-27 15:59:20,809 [INFO] Using GDAL data directory: E:\MLPREP\MLPREP\Objectives\Objective 4\Codes_V2\.venv-local\Lib\site-packages\rasterio\gdal_data
+2026-07-27 15:59:20,809 [INFO] Starting Step 2 pixel sample extraction.
+2026-07-27 15:59:20,809 [INFO] Label raster: E:\MLPREP\MLPREP\Objectives\Objective 4\Codes_V2\Sample Data\Output\Latest Runs\Step1\ml_dfi_label_raster.tif
+2026-07-27 15:59:20,809 [INFO] Output directory: E:\MLPREP\MLPREP\Objectives\Objective 4\Codes_V2\Sample Data\Output\Latest Runs\Step2
+2026-07-27 15:59:20,809 [INFO] Output format: csv
+2026-07-27 15:59:20,809 [INFO] Extraction mode: all valid labeled rows after predictor filtering.
+2026-07-27 15:59:20,816 [INFO] Predictor rasters retained: 9
+2026-07-27 15:59:20,816 [INFO] Required group rasters retained: 1
+2026-07-27 15:59:20,816 [INFO] Configured categorical predictors excluded from Pearson/VIF screening: geomorphology
+2026-07-27 15:59:21,187 [INFO] Label raster grid: width=5710 height=3698 CRS=ESRI:102457 dtype=int16 nodata=-9999.0
+2026-07-27 15:59:21,220 [INFO] Predictor alignment twi: status=OK crs_match=True transform_match=True width_match=True height_match=True
+2026-07-27 15:59:21,248 [INFO] Predictor alignment slope: status=OK crs_match=True transform_match=True width_match=True height_match=True
+2026-07-27 15:59:21,277 [INFO] Predictor alignment profile_curvature: status=OK crs_match=True transform_match=True width_match=True height_match=True
+2026-07-27 15:59:21,312 [INFO] Predictor alignment plan_curvature: status=OK crs_match=True transform_match=True width_match=True height_match=True
+2026-07-27 15:59:21,342 [INFO] Predictor alignment ndvi: status=OK crs_match=True transform_match=True width_match=True height_match=True
+2026-07-27 15:59:21,376 [INFO] Predictor alignment geomorphology: status=OK crs_match=True transform_match=True width_match=True height_match=True
+2026-07-27 15:59:21,410 [INFO] Predictor alignment dugsurf: status=OK crs_match=True transform_match=True width_match=True height_match=True
+2026-07-27 15:59:21,443 [INFO] Predictor alignment dstgsurf: status=OK crs_match=True transform_match=True width_match=True height_match=True
+2026-07-27 15:59:21,471 [INFO] Predictor alignment proximity_to_stream: status=OK crs_match=True transform_match=True width_match=True height_match=True
+2026-07-27 15:59:21,495 [INFO] Group alignment landslide_id: status=OK crs_match=True transform_match=True width_match=True height_match=True
+2026-07-27 15:59:22,372 [INFO] Valid label cells: 31588
+2026-07-27 15:59:22,372 [INFO] Available positive cells: 10606
+2026-07-27 15:59:22,372 [INFO] Available negative cells: 20982
+2026-07-27 15:59:22,372 [INFO] Extracting predictor values from E:\MLPREP\MLPREP\Objectives\Objective 4\Codes_V2\Sample Data\Input\Raster\Predictors\Topographic\Filtered\Makilala_TWI_Final_LPF_PRSTM51N.tif.
+2026-07-27 15:59:23,418 [INFO] Extracting predictor values from E:\MLPREP\MLPREP\Objectives\Objective 4\Codes_V2\Sample Data\Input\Raster\Predictors\Topographic\Filtered\Makilala_Slope_LPF_PRSTM51N.tif.
+2026-07-27 15:59:24,037 [INFO] Extracting predictor values from E:\MLPREP\MLPREP\Objectives\Objective 4\Codes_V2\Sample Data\Input\Raster\Predictors\Topographic\Filtered\Makilala_ProfCurv_LPF_PRSTM51N.tif.
+2026-07-27 15:59:24,654 [INFO] Extracting predictor values from E:\MLPREP\MLPREP\Objectives\Objective 4\Codes_V2\Sample Data\Input\Raster\Predictors\Topographic\Filtered\Makilala_PlanCurv_LPF_PRSTM51N.tif.
+2026-07-27 15:59:25,231 [INFO] Extracting predictor values from E:\MLPREP\MLPREP\Objectives\Objective 4\Codes_V2\Sample Data\Input\Raster\Predictors\Topographic\Filtered\Makilala_NDVI_LPF_PRSTM51N.tif.
+2026-07-27 15:59:25,857 [INFO] Extracting predictor values from E:\MLPREP\MLPREP\Objectives\Objective 4\Codes_V2\Sample Data\Input\Raster\Predictors\Topographic\Filtered\Makilala_Geomorphology_PRSTM51N.tif.
+2026-07-27 15:59:25,972 [INFO] Extracting predictor values from E:\MLPREP\MLPREP\Objectives\Objective 4\Codes_V2\Sample Data\Input\Raster\Predictors\Topographic\Filtered\Makilala_DUGSurf_LPF_PRSTM51N.tif.
+2026-07-27 15:59:26,847 [INFO] Extracting predictor values from E:\MLPREP\MLPREP\Objectives\Objective 4\Codes_V2\Sample Data\Input\Raster\Predictors\Topographic\Filtered\Makilala_DStGSurf_LPF_PRSTM51N.tif.
+2026-07-27 15:59:27,357 [INFO] Extracting predictor values from E:\MLPREP\MLPREP\Objectives\Objective 4\Codes_V2\Sample Data\Input\Raster\Predictors\Topographic\Makilala_PtS_PRSTM51N.tif.
+2026-07-27 15:59:27,952 [INFO] Starting predictor multicollinearity screening with thresholds: |Pearson r| >= 0.70, VIF >= 5.0, tolerance <= 0.20.
+2026-07-27 15:59:28,285 [INFO] Dropped predictor 'proximity_to_stream' during Pearson screening: high Pearson correlation with dstgsurf: |r|=0.881 >= 0.70
+2026-07-27 15:59:29,845 [INFO] Multicollinearity screening retained 8/9 predictors. Dropped: proximity_to_stream
+2026-07-27 15:59:29,845 [INFO] Multicollinearity summary path: E:\MLPREP\MLPREP\Objectives\Objective 4\Codes_V2\Sample Data\Output\Latest Runs\.Step2.step2-stage-6249vphp\multicollinearity_summary.csv
+2026-07-27 15:59:29,845 [INFO] Pearson matrix path: E:\MLPREP\MLPREP\Objectives\Objective 4\Codes_V2\Sample Data\Output\Latest Runs\.Step2.step2-stage-6249vphp\multicollinearity_pearson_matrix.csv
+2026-07-27 15:59:29,845 [INFO] Pearson heatmap path: E:\MLPREP\MLPREP\Objectives\Objective 4\Codes_V2\Sample Data\Output\Latest Runs\.Step2.step2-stage-6249vphp\multicollinearity_pearson_heatmap.png
+2026-07-27 15:59:29,845 [INFO] VIF/TOL plot path: E:\MLPREP\MLPREP\Objectives\Objective 4\Codes_V2\Sample Data\Output\Latest Runs\.Step2.step2-stage-6249vphp\multicollinearity_vif_tolerance.png
+2026-07-27 15:59:29,847 [INFO] Predictors retained after multicollinearity filtering: twi, slope, profile_curvature, plan_curvature, ndvi, geomorphology, dugsurf, dstgsurf
+2026-07-27 15:59:29,847 [INFO] Extracting group values from E:\MLPREP\MLPREP\Objectives\Objective 4\Codes_V2\Sample Data\Output\Latest Runs\Step1\landslide_id_raster.tif.
+2026-07-27 15:59:30,069 [INFO] predictor 'twi': nodata_rows=0 nonfinite_rows=0
+2026-07-27 15:59:30,069 [INFO] predictor 'slope': nodata_rows=27 nonfinite_rows=0
+2026-07-27 15:59:30,069 [INFO] predictor 'profile_curvature': nodata_rows=27 nonfinite_rows=0
+2026-07-27 15:59:30,069 [INFO] predictor 'plan_curvature': nodata_rows=27 nonfinite_rows=0
+2026-07-27 15:59:30,069 [INFO] predictor 'ndvi': nodata_rows=27 nonfinite_rows=0
+2026-07-27 15:59:30,069 [INFO] predictor 'geomorphology': nodata_rows=0 nonfinite_rows=0
+2026-07-27 15:59:30,070 [INFO] predictor 'dugsurf': nodata_rows=27 nonfinite_rows=0
+2026-07-27 15:59:30,070 [INFO] predictor 'dstgsurf': nodata_rows=133 nonfinite_rows=0
+2026-07-27 15:59:30,070 [INFO] predictor 'proximity_to_stream': nodata_rows=0 nonfinite_rows=0
+2026-07-27 15:59:30,070 [INFO] group 'landslide_id': nodata_rows=0 nonfinite_rows=0
+2026-07-27 15:59:30,071 [INFO] Rows after predictor filtering: 31455
+2026-07-27 15:59:30,133 [INFO] CSV compression was not applied so the output keeps the standard .csv filename.
+2026-07-27 15:59:31,115 [INFO] Wrote CSV output: E:\MLPREP\MLPREP\Objectives\Objective 4\Codes_V2\Sample Data\Output\Latest Runs\.Step2.step2-stage-6249vphp\ml_dfi_pixel_samples.csv
+2026-07-27 15:59:31,137 [INFO] Finished Step 2 successfully.
+2026-07-27 15:59:31,137 [INFO] Output table path: E:\MLPREP\MLPREP\Objectives\Objective 4\Codes_V2\Sample Data\Output\Latest Runs\Step2\ml_dfi_pixel_samples.csv
+2026-07-27 15:59:31,137 [INFO] Total samples: 31455
+2026-07-27 15:59:31,137 [INFO] Positive samples: 10545
+2026-07-27 15:59:31,137 [INFO] Negative samples: 20910
+2026-07-27 15:59:31,137 [INFO] Number of predictors: 8
+2026-07-27 15:59:31,137 [INFO] Summary CSV path: E:\MLPREP\MLPREP\Objectives\Objective 4\Codes_V2\Sample Data\Output\Latest Runs\Step2\ml_dfi_pixel_samples_summary.csv
+2026-07-27 15:59:31,137 [INFO] Alignment report path: E:\MLPREP\MLPREP\Objectives\Objective 4\Codes_V2\Sample Data\Output\Latest Runs\Step2\predictor_alignment_report.csv
+2026-07-27 15:59:31,137 [INFO] Multicollinearity summary path: E:\MLPREP\MLPREP\Objectives\Objective 4\Codes_V2\Sample Data\Output\Latest Runs\Step2\multicollinearity_summary.csv
+2026-07-27 15:59:31,137 [INFO] Processing log path: E:\MLPREP\MLPREP\Objectives\Objective 4\Codes_V2\Sample Data\Output\Latest Runs\Step2\processing_log.txt

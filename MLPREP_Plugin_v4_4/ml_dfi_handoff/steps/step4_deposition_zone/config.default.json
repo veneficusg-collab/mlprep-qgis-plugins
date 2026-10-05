@@ -1,0 +1,22 @@
+{
+  "dem_fel_raster": "../../Sample Data/Input/Raster/Shared Inputs/Makilala_DEM_Fill_PRSTM51N.tif",
+  "dinf_flow_raster": "../../Sample Data/Input/Raster/Shared Inputs/Makilala_DFD_PRSTM51N.tif",
+  "source_raster": "../../Sample Data/Input/Raster/Shared Inputs/Makilala_EIL_PRSTM51N.tif",
+  "dfi_raster": "../../Sample Data/Output/Latest Runs/Step3/domain_application_dfi/ml_dfi_probability_full_valid_predictor_domain.tif",
+  "alpha_raster": "../../Sample Data/Output/Latest Runs/Step0/Makilala_BaselineAlpha_PRSTM51N.tif",
+  "proportion_threshold": 0.2,
+  "dfi_mid": 0.69,
+  "alpha_gain_per_meter": 0.03333,
+  "write_debug_rasters": false,
+  "output_dynamic_alpha": "../../Sample Data/Output/Latest Runs/Step4/step4_dynamic_alpha.tif",
+  "output_beta_angle": "../../Sample Data/Output/Latest Runs/Step4/step4_beta_angle.tif",
+  "output_dfs": "../../Sample Data/Output/Latest Runs/Step4/step4_dfs.tif",
+  "output_mask": "../../Sample Data/Output/Latest Runs/Step4/step4_runout_mask.tif",
+  "output_depositional_mask": "../../Sample Data/Output/Latest Runs/Step4/step4_pure_depositional_mask.tif",
+  "output_summary_json": "../../Sample Data/Output/Latest Runs/Step4/step4_runout_summary.json",
+  "observed_full_landslide_footprint_raster": "",
+  "observed_depositional_zone_raster": "",
+  "validation_domain_raster": "",
+  "output_validation_summary_csv": "",
+  "output_validation_summary_json": ""
+}

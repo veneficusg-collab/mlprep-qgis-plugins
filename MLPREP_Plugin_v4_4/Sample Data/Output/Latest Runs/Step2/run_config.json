@@ -1,0 +1,93 @@
+{
+  "created_utc": "2026-07-27T07:59:31.132348+00:00",
+  "workflow": "step2_extract_pixel_samples",
+  "behavior": {
+    "alignment": "strict_manual_precondition",
+    "extraction": "all_valid_labeled_rows",
+    "predictor_invalid_rows": "always_drop",
+    "group_validation": "required_complete_positive_integer_landslide_id"
+  },
+  "config": {
+    "label_raster_path": "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Output\\Latest Runs\\Step1\\ml_dfi_label_raster.tif",
+    "predictor_rasters": {
+      "twi": "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Input\\Raster\\Predictors\\Topographic\\Filtered\\Makilala_TWI_Final_LPF_PRSTM51N.tif",
+      "slope": "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Input\\Raster\\Predictors\\Topographic\\Filtered\\Makilala_Slope_LPF_PRSTM51N.tif",
+      "profile_curvature": "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Input\\Raster\\Predictors\\Topographic\\Filtered\\Makilala_ProfCurv_LPF_PRSTM51N.tif",
+      "plan_curvature": "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Input\\Raster\\Predictors\\Topographic\\Filtered\\Makilala_PlanCurv_LPF_PRSTM51N.tif",
+      "ndvi": "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Input\\Raster\\Predictors\\Topographic\\Filtered\\Makilala_NDVI_LPF_PRSTM51N.tif",
+      "geomorphology": "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Input\\Raster\\Predictors\\Topographic\\Filtered\\Makilala_Geomorphology_PRSTM51N.tif",
+      "dugsurf": "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Input\\Raster\\Predictors\\Topographic\\Filtered\\Makilala_DUGSurf_LPF_PRSTM51N.tif",
+      "dstgsurf": "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Input\\Raster\\Predictors\\Topographic\\Filtered\\Makilala_DStGSurf_LPF_PRSTM51N.tif",
+      "proximity_to_stream": "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Input\\Raster\\Predictors\\Topographic\\Makilala_PtS_PRSTM51N.tif"
+    },
+    "group_rasters": {
+      "landslide_id": "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Output\\Latest Runs\\Step1\\landslide_id_raster.tif"
+    },
+    "categorical_predictors": [
+      "geomorphology"
+    ],
+    "output_dir": "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Output\\Latest Runs\\Step2",
+    "output_table_name": "ml_dfi_pixel_samples",
+    "output_format": "csv",
+    "label_nodata_value": -9999,
+    "include_coordinates": true,
+    "include_row_col": true,
+    "compress_outputs": true
+  },
+  "reference_grid": {
+    "path": "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Output\\Latest Runs\\Step1\\ml_dfi_label_raster.tif",
+    "crs": "ESRI:102457",
+    "transform": [
+      5.0,
+      0.0,
+      719707.5,
+      0.0,
+      -5.0,
+      774782.5,
+      0.0,
+      0.0,
+      1.0
+    ],
+    "width": 5710,
+    "height": 3698,
+    "nodata": -9999.0
+  },
+  "configured_predictors": [
+    "twi",
+    "slope",
+    "profile_curvature",
+    "plan_curvature",
+    "ndvi",
+    "geomorphology",
+    "dugsurf",
+    "dstgsurf",
+    "proximity_to_stream"
+  ],
+  "retained_predictors": [
+    "twi",
+    "slope",
+    "profile_curvature",
+    "plan_curvature",
+    "ndvi",
+    "geomorphology",
+    "dugsurf",
+    "dstgsurf"
+  ],
+  "dropped_predictors": [
+    "proximity_to_stream"
+  ],
+  "group_columns": [
+    "landslide_id"
+  ],
+  "output_files": [
+    "ml_dfi_pixel_samples.csv",
+    "ml_dfi_pixel_samples_summary.csv",
+    "multicollinearity_pearson_heatmap.png",
+    "multicollinearity_pearson_matrix.csv",
+    "multicollinearity_summary.csv",
+    "multicollinearity_vif_tolerance.png",
+    "predictor_alignment_report.csv",
+    "processing_log.txt",
+    "run_config.json"
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "predictor_rasters": {
+    "twi": "input/raster/Predictors/Topographic/Filtered/Makilala_TWI_Final_LPF_PRSTM51N.tif",
+    "slope": "input/raster/Predictors/Topographic/Filtered/Makilala_Slope_LPF_PRSTM51N.tif",
+    "profile_curvature": "input/raster/Predictors/Topographic/Filtered/Makilala_ProfCurv_LPF_PRSTM51N.tif",
+    "plan_curvature": "input/raster/Predictors/Topographic/Filtered/Makilala_PlanCurv_LPF_PRSTM51N.tif",
+    "ndvi": "input/raster/Predictors/Topographic/Filtered/Makilala_NDVI_LPF_PRSTM51N.tif",
+    "geomorphology": "input/raster/Predictors/Topographic/Filtered/Makilala_Geomorphology_PRSTM51N.tif",
+    "dugsurf": "input/raster/Predictors/Topographic/Filtered/Makilala_DUGSurf_LPF_PRSTM51N.tif",
+    "dstgsurf": "input/raster/Predictors/Topographic/Filtered/Makilala_DStGSurf_LPF_PRSTM51N.tif"
+  }
+}

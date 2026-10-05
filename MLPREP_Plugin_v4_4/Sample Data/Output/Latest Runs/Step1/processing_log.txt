@@ -1,0 +1,52 @@
+2026-07-27 15:57:09,764 [INFO] Starting Step 1 inventory label preparation.
+2026-07-27 15:57:09,764 [INFO] Input landslide polygons: E:\MLPREP\MLPREP\Objectives\Objective 4\Codes_V2\Sample Data\Output\Latest Runs\Step00_DP1\dp1.gpkg|layername=dp1_landslide_polygons_clean
+2026-07-27 15:57:09,764 [INFO] Input DEM: E:\MLPREP\MLPREP\Objectives\Objective 4\Codes_V2\Sample Data\Input\Raster\Shared Inputs\Makilala_DEM_Fill_PRSTM51N.tif
+2026-07-27 15:57:09,764 [INFO] Validated outputs will be published to: E:\MLPREP\MLPREP\Objectives\Objective 4\Codes_V2\Sample Data\Output\Latest Runs\Step1
+2026-07-27 15:57:09,765 [INFO] Staging directory: E:\MLPREP\MLPREP\Objectives\Objective 4\Codes_V2\Sample Data\Output\Latest Runs\.step1-stage-lhgh3b_3
+2026-07-27 15:57:09,765 [INFO] Depositional percentile: 15.00
+2026-07-27 15:57:09,765 [INFO] Non-depositional upper-zone percentage: 30.00
+2026-07-27 15:57:09,765 [INFO] Computed high-elevation threshold percentile: 70.00
+2026-07-27 15:57:09,765 [INFO] Polygon multiprocessing requested: True; maximum workers: 4
+2026-07-27 15:57:09,765 [INFO] Using PROJ data directory: E:\MLPREP\MLPREP\Objectives\Objective 4\Codes_V2\.venv-local\Lib\site-packages\rasterio\proj_data
+2026-07-27 15:57:09,765 [INFO] Using GDAL data directory: E:\MLPREP\MLPREP\Objectives\Objective 4\Codes_V2\.venv-local\Lib\site-packages\rasterio\gdal_data
+2026-07-27 15:57:09,824 [INFO] DEM grid: width=5710 height=3698 resolution=(5.000000, 5.000000) CRS=ESRI:102457
+2026-07-27 15:57:10,244 [INFO] Loaded 487 landslide polygons.
+2026-07-27 15:57:15,084 [INFO] Polygon classification execution: mode=multiprocessing workers=4 polygons=487.
+2026-07-27 15:57:17,495 [INFO] Polygon classification progress: 24/487 (4.9%).
+2026-07-27 15:57:17,555 [INFO] Polygon classification progress: 48/487 (9.9%).
+2026-07-27 15:57:17,592 [INFO] Polygon classification progress: 72/487 (14.8%).
+2026-07-27 15:57:17,624 [INFO] Polygon classification progress: 96/487 (19.7%).
+2026-07-27 15:57:17,659 [INFO] Polygon classification progress: 120/487 (24.6%).
+2026-07-27 15:57:17,676 [INFO] Polygon classification progress: 144/487 (29.6%).
+2026-07-27 15:57:17,692 [INFO] Polygon classification progress: 168/487 (34.5%).
+2026-07-27 15:57:17,747 [INFO] Polygon classification progress: 192/487 (39.4%).
+2026-07-27 15:57:17,769 [INFO] Polygon classification progress: 216/487 (44.4%).
+2026-07-27 15:57:17,793 [INFO] Polygon classification progress: 240/487 (49.3%).
+2026-07-27 15:57:17,808 [INFO] Polygon classification progress: 264/487 (54.2%).
+2026-07-27 15:57:17,821 [INFO] Polygon classification progress: 288/487 (59.1%).
+2026-07-27 15:57:17,835 [INFO] Polygon classification progress: 312/487 (64.1%).
+2026-07-27 15:57:17,847 [INFO] Polygon classification progress: 336/487 (69.0%).
+2026-07-27 15:57:17,860 [INFO] Polygon classification progress: 360/487 (73.9%).
+2026-07-27 15:57:17,884 [INFO] Polygon classification progress: 384/487 (78.9%).
+2026-07-27 15:57:17,978 [INFO] Polygon classification progress: 408/487 (83.8%).
+2026-07-27 15:57:18,020 [INFO] Polygon classification progress: 432/487 (88.7%).
+2026-07-27 15:57:18,127 [INFO] Polygon classification progress: 456/487 (93.6%).
+2026-07-27 15:57:18,245 [INFO] Polygon classification progress: 480/487 (98.6%).
+2026-07-27 15:57:18,268 [INFO] Polygon classification progress: 487/487 (100.0%).
+2026-07-27 15:57:18,660 [INFO] Per-polygon internal-zone classification complete: processed=486 skipped=1 depositional_cells=10606 non_depositional_cells=20982 uncertain_cells=37962.
+2026-07-27 15:57:18,661 [INFO] Writing aligned raster outputs in bounded-memory windows.
+2026-07-27 15:57:50,232 [INFO] QC checks passed for all raster outputs.
+2026-07-27 15:57:50,232 [WARNING] Discrete pixels or tied DEM elevations caused class shares to differ by more than 5 percentage points in 0 depositional and 11 non-depositional polygons.
+2026-07-27 15:57:50,232 [INFO] Skipped polygons: 1
+2026-07-27 15:57:50,232 [INFO] Depositional cells: 10606
+2026-07-27 15:57:50,232 [INFO] Non-depositional cells: 20982
+2026-07-27 15:57:50,232 [INFO] Uncertain cells: 37962
+2026-07-27 15:57:50,232 [INFO] Resolved depositional/non-depositional overlap cells: 0
+2026-07-27 15:57:50,232 [INFO] Resolved uncertain/labeled overlap cells: 0
+2026-07-27 15:57:50,232 [INFO] NoData cells: 21083992
+2026-07-27 15:57:50,233 [INFO] QC passed; publishing the complete Step 1 output bundle.
+2026-07-27 15:57:50,233 [INFO] Output label raster: E:\MLPREP\MLPREP\Objectives\Objective 4\Codes_V2\Sample Data\Output\Latest Runs\Step1\ml_dfi_label_raster.tif
+2026-07-27 15:57:50,233 [INFO] Output landslide ID raster: E:\MLPREP\MLPREP\Objectives\Objective 4\Codes_V2\Sample Data\Output\Latest Runs\Step1\landslide_id_raster.tif
+2026-07-27 15:57:50,233 [INFO] Output summary CSV: E:\MLPREP\MLPREP\Objectives\Objective 4\Codes_V2\Sample Data\Output\Latest Runs\Step1\label_summary.csv
+2026-07-27 15:57:50,233 [INFO] Resolved run config: E:\MLPREP\MLPREP\Objectives\Objective 4\Codes_V2\Sample Data\Output\Latest Runs\Step1\run_config.json
+2026-07-27 15:57:50,233 [INFO] Completed successfully.

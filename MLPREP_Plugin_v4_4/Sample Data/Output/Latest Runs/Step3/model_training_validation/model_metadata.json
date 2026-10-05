@@ -1,0 +1,332 @@
+{
+  "workflow": "step3_train_ml_dfi_model",
+  "model_type": "xgboost",
+  "input_sample_table": "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Output\\Latest Runs\\Step2\\ml_dfi_pixel_samples.csv",
+  "input_sample_table_sha256": "19ddd6c9f5c2298634a63414456cac7859c766a6516486cb8c73cdcff37e8083",
+  "model_sha256": "009f584d7326d483b777909b78d25ef2c629312cfbcb4189e86102a7c78ee9fb",
+  "resolved_config": {
+    "input_sample_table": "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Output\\Latest Runs\\Step2\\ml_dfi_pixel_samples.csv",
+    "output_dir": "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Output\\Latest Runs\\Step3\\model_training_validation",
+    "input_format": "auto",
+    "target_column": "target",
+    "id_columns": [
+      "sample_id",
+      "row",
+      "col",
+      "x",
+      "y"
+    ],
+    "group_columns": [
+      "landslide_id"
+    ],
+    "drop_columns": [
+      "sample_role",
+      "split"
+    ],
+    "categorical_columns": [
+      "geomorphology"
+    ],
+    "auto_detect_categorical": false,
+    "model_type": "xgboost",
+    "random_seed": 42,
+    "missing_predictor_strategy": "xgboost_native_else_median_impute",
+    "class_imbalance_strategy": "auto_scale_pos_weight",
+    "enable_hyperparameter_tuning": true,
+    "tuning_trials": 100,
+    "tuning_metric": "PR_AUC",
+    "xgboost_params": {
+      "n_estimators": 2000,
+      "max_depth": 4,
+      "learning_rate": 0.07858314782439124,
+      "subsample": 0.611701277063828,
+      "colsample_bytree": 0.582729702340584,
+      "min_child_weight": 11.603110111695708,
+      "reg_alpha": 4.718764772669552,
+      "reg_lambda": 1.5711944615650517,
+      "objective": "binary:logistic",
+      "eval_metric": "aucpr",
+      "tree_method": "hist",
+      "early_stopping_rounds": 100,
+      "n_jobs": 4,
+      "gamma": 1.755919159872127,
+      "scale_pos_weight": 4.933467391994213
+    },
+    "random_forest_params": {
+      "n_estimators": 500,
+      "max_depth": null,
+      "min_samples_leaf": 2,
+      "class_weight": "balanced_subsample",
+      "n_jobs": 4
+    },
+    "probability_threshold": "optimize_f1",
+    "fixed_threshold": 0.5,
+    "write_feature_importance": true,
+    "write_predictions": true,
+    "write_model": true,
+    "write_plots": true,
+    "write_explainability": true,
+    "shap_sample_size": 5000,
+    "shap_max_display_features": 12,
+    "partial_dependence_sample_size": 2500,
+    "partial_dependence_grid_resolution": 25,
+    "partial_dependence_max_categories": 12
+  },
+  "artifact_files": [
+    "calibration_curve.png",
+    "final_training_partial_dependence.csv",
+    "final_training_probability_histogram.png",
+    "holdout_validation_confusion_matrix.png",
+    "holdout_validation_feature_importance.png",
+    "holdout_validation_partial_dependence.csv",
+    "holdout_validation_permutation_feature_importance.csv",
+    "holdout_validation_probability_histogram.png",
+    "holdout_validation_shap_dependence_plots.png",
+    "holdout_validation_shap_feature_importance.csv",
+    "holdout_validation_shap_feature_importance.png",
+    "holdout_validation_shap_summary_beeswarm.png",
+    "hyperparameter_tuning_trials.csv",
+    "model_metrics.csv",
+    "partial_dependence.csv",
+    "partial_dependence_plots.png",
+    "pr_auc_comparison_folds_training_holdout_line.png",
+    "pr_curve.png",
+    "processing_log.txt",
+    "roc_curve.png",
+    "threshold_analysis.csv",
+    "trained_ml_dfi_model.pkl",
+    "training_predictions.csv",
+    "validation_predictions.csv"
+  ],
+  "target_column": "target",
+  "predictor_columns": [
+    "twi",
+    "slope",
+    "profile_curvature",
+    "plan_curvature",
+    "ndvi",
+    "geomorphology",
+    "dugsurf",
+    "dstgsurf"
+  ],
+  "numeric_predictor_columns": [
+    "twi",
+    "slope",
+    "profile_curvature",
+    "plan_curvature",
+    "ndvi",
+    "dugsurf",
+    "dstgsurf"
+  ],
+  "categorical_predictor_columns": [
+    "geomorphology"
+  ],
+  "categorical_levels": {
+    "geomorphology": [
+      "1.0",
+      "2.0",
+      "3.0",
+      "4.0",
+      "5.0",
+      "6.0"
+    ]
+  },
+  "removed_columns": {
+    "excluded_by_role": [
+      "col",
+      "landslide_id",
+      "row",
+      "sample_id",
+      "target",
+      "x",
+      "y"
+    ],
+    "non_numeric_columns": [],
+    "categorical_columns": [
+      "geomorphology"
+    ]
+  },
+  "cleaning_stats": {
+    "rows_before_cleaning": 31455,
+    "rows_removed_missing_target": 0,
+    "rows_removed_invalid_target": 0,
+    "rows_removed_invalid_predictors": 0,
+    "missing_predictor_values_retained": 0,
+    "missing_categorical_values_retained": 0,
+    "non_finite_predictor_values_removed": 0,
+    "duplicate_rows_removed": 0,
+    "rows_after_cleaning": 31455
+  },
+  "training_sample_count": 22009,
+  "validation_sample_count": 31455,
+  "cv_validation_prediction_count": 22009,
+  "holdout_validation_sample_count": 9446,
+  "positive_count": 7384,
+  "negative_count": 14625,
+  "class_imbalance_strategy": "auto_scale_pos_weight",
+  "missing_predictor_strategy": "xgboost_native_else_median_impute",
+  "final_model_scope": "holdout_training_split_after_group_cv",
+  "selected_probability_threshold": 0.78,
+  "random_seed": 42,
+  "model_parameters": {
+    "n_estimators": 70,
+    "max_depth": 4,
+    "learning_rate": 0.07858314782439124,
+    "subsample": 0.611701277063828,
+    "colsample_bytree": 0.582729702340584,
+    "min_child_weight": 11.603110111695708,
+    "reg_alpha": 4.718764772669552,
+    "reg_lambda": 1.5711944615650517,
+    "objective": "binary:logistic",
+    "eval_metric": "aucpr",
+    "tree_method": "hist",
+    "n_jobs": 4,
+    "gamma": 1.755919159872127,
+    "scale_pos_weight": 4.933467391994213,
+    "random_state": 42
+  },
+  "hyperparameter_tuning": {
+    "enabled": true,
+    "library": "optuna",
+    "tuning_trials_requested": 100,
+    "tuning_trials_started": 100,
+    "tuning_trials_completed": 43,
+    "tuning_trials_pruned": 57,
+    "fold_preprocessing_cache": true,
+    "pruner": "MedianPruner",
+    "tuning_metric": "PR_AUC",
+    "tuning_validation_mode_requested": "stratified_group_kfold",
+    "tuning_validation_mode_used": "stratified_group_kfold",
+    "tuning_source": "holdout_training_split",
+    "best_trial_number": 89,
+    "best_metric_value": 0.8325187422113671,
+    "best_params": {
+      "n_estimators": 2000,
+      "max_depth": 4,
+      "learning_rate": 0.07858314782439124,
+      "subsample": 0.611701277063828,
+      "colsample_bytree": 0.582729702340584,
+      "min_child_weight": 11.603110111695708,
+      "reg_alpha": 4.718764772669552,
+      "reg_lambda": 1.5711944615650517,
+      "objective": "binary:logistic",
+      "eval_metric": "aucpr",
+      "tree_method": "hist",
+      "early_stopping_rounds": 100,
+      "n_jobs": 4,
+      "gamma": 1.755919159872127,
+      "scale_pos_weight": 4.933467391994213
+    },
+    "trials_path": "hyperparameter_tuning_trials.csv"
+  },
+  "xgboost_early_stopping": {
+    "enabled": true,
+    "selection_strategy": "median_across_validation_folds",
+    "validation_best_n_estimators": [
+      35,
+      78,
+      101,
+      19,
+      70
+    ],
+    "final_n_estimators": 70,
+    "configured_n_estimators": 2000
+  },
+  "explainability": {
+    "shap_feature_importance": {
+      "enabled": true,
+      "primary_dataset": "holdout_validation",
+      "datasets": {
+        "holdout_validation": {
+          "enabled": true,
+          "method": "xgboost_pred_contribs",
+          "sample_count": 5000,
+          "importance_path": "holdout_validation_shap_feature_importance.csv",
+          "feature_importance_plot_path": "holdout_validation_shap_feature_importance.png",
+          "summary_plot_path": "holdout_validation_shap_summary_beeswarm.png",
+          "dependence_plot_path": "holdout_validation_shap_dependence_plots.png",
+          "mean_bias_contribution": 0.9568029642105103,
+          "contribution_output": "xgboost_raw_margin"
+        }
+      }
+    },
+    "partial_dependence": {
+      "enabled": true,
+      "data_path": "partial_dependence.csv",
+      "plot_path": "partial_dependence_plots.png",
+      "datasets": {
+        "final_training": {
+          "enabled": true,
+          "sample_count": 2500,
+          "predictor_count": 8,
+          "data_path": "final_training_partial_dependence.csv",
+          "plot_path": null
+        },
+        "holdout_validation": {
+          "enabled": true,
+          "sample_count": 2500,
+          "predictor_count": 8,
+          "data_path": "holdout_validation_partial_dependence.csv",
+          "plot_path": null
+        }
+      }
+    }
+  },
+  "validation_plots": {
+    "enabled": true,
+    "datasets": {
+      "final_training": {
+        "probability_histogram": "final_training_probability_histogram.png"
+      },
+      "holdout_validation": {
+        "confusion_matrix": "holdout_validation_confusion_matrix.png",
+        "probability_histogram": "holdout_validation_probability_histogram.png",
+        "feature_importance": {
+          "data_path": "holdout_validation_permutation_feature_importance.csv",
+          "plot_path": "holdout_validation_feature_importance.png"
+        }
+      }
+    },
+    "overlay_pr_curve": "pr_curve.png",
+    "overlay_roc_curve": "roc_curve.png",
+    "calibration_curve": "calibration_curve.png",
+    "pr_auc_comparison": "pr_auc_comparison_folds_training_holdout_line.png"
+  },
+  "validation_workflow": "holdout_then_stratified_group_kfold",
+  "holdout_validation": {
+    "requested_holdout_fraction": 0.3,
+    "actual_holdout_fraction": 0.3003020187569544,
+    "training_sample_count": 22009,
+    "holdout_sample_count": 9446,
+    "training_group_count": 345,
+    "holdout_group_count": 138,
+    "training_class_counts": {
+      "0": 14625,
+      "1": 7384
+    },
+    "holdout_class_counts": {
+      "0": 6285,
+      "1": 3161
+    },
+    "split_method": "3_of_10_stratified_group_bins"
+  },
+  "validation_mode": "stratified_group_kfold",
+  "validation_mode_used": "holdout_then_stratified_group_kfold",
+  "validation_group_column": "landslide_id",
+  "validation_fold_count": 5,
+  "reporting_guidance": {
+    "independent_performance_priority_rows": [
+      "holdout_validation_threshold_0.5",
+      "holdout_validation_threshold_optimized",
+      "cv_mean_threshold_0.5",
+      "cv_mean_threshold_optimized",
+      "validation_threshold_0.5",
+      "validation_threshold_optimized"
+    ],
+    "diagnostic_only_rows": [
+      "final_training"
+    ],
+    "note": "When holdout validation is enabled, report final independent performance from holdout_validation rows. Use CV rows to describe model selection/tuning stability. Treat final_training metrics as model-fit diagnostics only because they are computed on the same rows used to fit the final saved model."
+  },
+  "date_time_created": "2026-07-27T16:04:23",
+  "scientific_framing": "Predicted probabilities are ML-derived Depositional Favorability Index values. They do not represent landslide initiation susceptibility or full runout footprints."
+}
