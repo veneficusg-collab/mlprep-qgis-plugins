@@ -1,0 +1,10 @@
+predictor,status,test_role,drop_reason,screening_sample_rows,valid_fraction_in_screening_sample,max_abs_pearson_final_if_retained,VIF_final_if_retained,tolerance_final_if_retained,pearson_abs_threshold,VIF_threshold,tolerance_threshold
+twi,retained,continuous_tested,,31455,1.0,0.6331125719675628,3.142882688921364,0.3181792319277432,0.7,5.0,0.2
+slope,retained,continuous_tested,,31455,0.9991452450297581,0.42296846485211875,1.544262418043622,0.6475583348501538,0.7,5.0,0.2
+profile_curvature,retained,continuous_tested,,31455,0.9991452450297581,0.5651089118619829,1.6701898125762897,0.5987343429292548,0.7,5.0,0.2
+plan_curvature,retained,continuous_tested,,31455,0.9991452450297581,0.6331125719675628,1.8933706213621515,0.5281586123273466,0.7,5.0,0.2
+ndvi,retained,continuous_tested,,31455,0.9991452450297581,0.316494026345685,1.1550691369903086,0.8657490430448497,0.7,5.0,0.2
+geomorphology,retained,configured_categorical_skipped,,31588,1.0,,,,0.7,5.0,0.2
+dugsurf,retained,continuous_tested,,31455,0.9991452450297581,0.316494026345685,1.4771771701555272,0.6769668664014847,0.7,5.0,0.2
+dstgsurf,retained,continuous_tested,,31455,0.9957895403317716,0.47934750624220396,1.4209237248592121,0.7037675439609413,0.7,5.0,0.2
+proximity_to_stream,dropped,continuous_tested,high Pearson correlation with dstgsurf: |r|=0.881 >= 0.70,31455,1.0,,,,0.7,5.0,0.2

@@ -1,3 +1,4 @@
+
 # Reproducible Software Environment
 
 ## Tested Platform
@@ -150,3 +151,4 @@ python .\workflow_config.py run data_preparation --check-environment
 - Historical OSGeo4W builds may require an archived installer or package
   mirror. A newer QGIS build should be treated as a new environment and pass
   all preflight and representative raster tests before production use.
+

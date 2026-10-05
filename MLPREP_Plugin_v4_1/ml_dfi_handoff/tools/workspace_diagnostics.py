@@ -1,3 +1,4 @@
+
 """Read-only diagnostics for the ML-DFI Objective 4 workspace."""
 
 from __future__ import annotations
@@ -347,3 +348,4 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+

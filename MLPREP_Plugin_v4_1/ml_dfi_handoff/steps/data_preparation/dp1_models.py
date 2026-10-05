@@ -1,3 +1,4 @@
+
 """Typed containers for the pure Step 1 observed-alpha core.
 
 Plain-English map of this file:
@@ -124,3 +125,4 @@ class Step1CoreResult:
     polygon_results: list[Step1PolygonResult] = field(default_factory=lambda: [])
     path_result: Optional[Step1PathResult] = None
     summary: dict[str, Any] = field(default_factory=lambda: {})
+

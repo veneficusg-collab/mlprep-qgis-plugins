@@ -1,3 +1,4 @@
+
 /*
    Step 4 deposition-zone dynamic-alpha MPI port.
 
@@ -867,3 +868,4 @@ int main(int argc, char** argv) {
     MPI_Finalize();
     return rc;
 }
+

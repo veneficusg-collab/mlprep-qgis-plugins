@@ -1,0 +1,27 @@
+2026-09-11 00:14:31,158 [WARNING] Loading a joblib model executes serialized Python objects. Use only a trusted Step 3 model artifact.
+2026-09-11 00:14:31,158 [INFO] Loading model: /Users/ml-prepproject/Library/Application Support/QGIS/QGIS3/profiles/default/python/plugins/MLPREP_Plugin_v4_3/model_dfi/trained_ml_dfi_model.pkl
+2026-09-11 00:14:31,980 [INFO] Reference raster: /Users/ml-prepproject/Library/Application Support/QGIS/QGIS3/profiles/default/python/plugins/MLPREP_Plugin_v4_3/Sample Data/input/raster/Predictors/Topographic/Filtered/Makilala_Slope_LPF_PRSTM51N.tif
+2026-09-11 00:14:31,980 [INFO] Predictor columns: twi, slope, profile_curvature, plan_curvature, ndvi, geomorphology, dugsurf, dstgsurf
+2026-09-11 00:14:31,980 [INFO] Categorical predictor contract: geomorphology
+2026-09-11 00:14:32,339 [INFO] Predicted window 1/15: row_off=0 height=256 valid_pixels=621541 cumulative_predicted=621541
+2026-09-11 00:14:32,826 [INFO] Predicted window 2/15: row_off=256 height=256 valid_pixels=1114143 cumulative_predicted=1735684
+2026-09-11 00:14:33,428 [INFO] Predicted window 3/15: row_off=512 height=256 valid_pixels=1326567 cumulative_predicted=3062251
+2026-09-11 00:14:34,080 [INFO] Predicted window 4/15: row_off=768 height=256 valid_pixels=1364508 cumulative_predicted=4426759
+2026-09-11 00:14:34,666 [INFO] Predicted window 5/15: row_off=1024 height=256 valid_pixels=1311300 cumulative_predicted=5738059
+2026-09-11 00:14:35,238 [INFO] Predicted window 6/15: row_off=1280 height=256 valid_pixels=1244985 cumulative_predicted=6983044
+2026-09-11 00:14:35,782 [INFO] Predicted window 7/15: row_off=1536 height=256 valid_pixels=1195709 cumulative_predicted=8178753
+2026-09-11 00:14:36,308 [INFO] Predicted window 8/15: row_off=1792 height=256 valid_pixels=1132119 cumulative_predicted=9310872
+2026-09-11 00:14:36,810 [INFO] Predicted window 9/15: row_off=2048 height=256 valid_pixels=1073794 cumulative_predicted=10384666
+2026-09-11 00:14:37,249 [INFO] Predicted window 10/15: row_off=2304 height=256 valid_pixels=931215 cumulative_predicted=11315881
+2026-09-11 00:14:37,598 [INFO] Predicted window 11/15: row_off=2560 height=256 valid_pixels=721732 cumulative_predicted=12037613
+2026-09-11 00:14:37,928 [INFO] Predicted window 12/15: row_off=2816 height=256 valid_pixels=661609 cumulative_predicted=12699222
+2026-09-11 00:14:38,231 [INFO] Predicted window 13/15: row_off=3072 height=256 valid_pixels=595698 cumulative_predicted=13294920
+2026-09-11 00:14:38,450 [INFO] Predicted window 14/15: row_off=3328 height=256 valid_pixels=371497 cumulative_predicted=13666417
+2026-09-11 00:14:38,506 [INFO] Predicted window 15/15: row_off=3584 height=114 valid_pixels=45415 cumulative_predicted=13711832
+2026-09-11 00:14:41,272 [INFO] Wrote full-domain SHAP analysis from 60000 sampled predicted pixels.
+2026-09-11 00:14:41,295 [INFO] Finished ML-DFI raster prediction successfully.
+2026-09-11 00:14:41,296 [INFO] Official output probability raster: /Users/ml-prepproject/Library/Application Support/QGIS/QGIS3/profiles/default/python/plugins/MLPREP_Plugin_v4_3/Sample Data/Output/Test_Run/ml_dfi_probability_full_valid_predictor_domain.tif
+2026-09-11 00:14:41,296 [INFO] Predicted pixels: 13711832
+2026-09-11 00:14:41,296 [INFO] Probability range: 0.005076 to 0.987910
+2026-09-11 00:14:41,296 [INFO] Mean probability: 0.573259
+2026-09-11 00:14:41,296 [INFO] Official summary JSON: /Users/ml-prepproject/Library/Application Support/QGIS/QGIS3/profiles/default/python/plugins/MLPREP_Plugin_v4_3/Sample Data/Output/Test_Run/ml_dfi_probability_full_valid_predictor_domain_summary.json

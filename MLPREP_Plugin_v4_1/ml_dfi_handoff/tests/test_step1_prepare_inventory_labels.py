@@ -1,3 +1,4 @@
+
 import importlib.util
 import json
 import logging
@@ -319,3 +320,4 @@ def test_publication_failure_rolls_back_complete_previous_bundle(
     assert (output_dir / "first.txt").read_text(encoding="utf-8") == "old-first"
     assert (output_dir / "second.txt").read_text(encoding="utf-8") == "old-second"
     assert not list(tmp_path.glob(".step1-backup-*"))
+

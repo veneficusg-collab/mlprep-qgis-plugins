@@ -1,3 +1,4 @@
+
 import json
 import os
 import subprocess
@@ -210,3 +211,4 @@ def test_full_default_n1_n8_and_retained_baseline_match(tmp_path: Path) -> None:
         n8 = run_dirs[8] / name
         assert _rasters_are_exactly_equal(n1, n8), f"n1/n8 mismatch: {key}"
         assert _rasters_are_exactly_equal(n8, official_paths[key]), f"retained baseline mismatch: {key}"
+

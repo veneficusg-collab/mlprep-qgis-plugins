@@ -1,3 +1,4 @@
+
 {
   "extract_pixel_samples": {
     "label_raster_path": "../../Sample Data/Output/Latest Runs/Step1/ml_dfi_label_raster.tif",
@@ -27,3 +28,4 @@
     "compress_outputs": true
   }
 }
+

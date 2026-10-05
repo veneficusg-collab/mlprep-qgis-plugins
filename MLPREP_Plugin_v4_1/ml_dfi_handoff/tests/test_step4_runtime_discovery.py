@@ -1,3 +1,4 @@
+
 from __future__ import annotations
 
 import importlib.util
@@ -73,3 +74,4 @@ def test_invalid_explicit_proj_directory_fails_clearly(tmp_path, monkeypatch):
 
     with pytest.raises(FileNotFoundError, match=module.TAUDEM_PROJ_ENV):
         module.resolve_taudem_proj_dir(runtime_dir)
+

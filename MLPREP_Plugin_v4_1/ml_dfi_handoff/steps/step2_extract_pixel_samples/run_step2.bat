@@ -1,3 +1,4 @@
+
 @echo off
 setlocal
 if defined MLDFI_PYTHON (
@@ -15,3 +16,4 @@ if "%~1"=="" (
   "%PYTHON_EXE%" "%~dp0step2_extract_pixel_samples.py" %*
 )
 exit /b %ERRORLEVEL%
+

@@ -1,3 +1,4 @@
+
 /*  Taudem parallel linear partition classes
 
   David Tarboton, Kim Schreuders, Dan Watson
@@ -568,3 +569,4 @@ void linearpart<datatype>::addToData(long inx, long iny, datatype val){
 	}
 }
 #endif
+

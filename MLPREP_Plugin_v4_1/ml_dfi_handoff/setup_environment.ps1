@@ -1,3 +1,4 @@
+
 param(
     [ValidateSet("lock", "minimum")]
     [string]$DependencySet = "lock",
@@ -25,3 +26,4 @@ if (Get-Command py -ErrorAction SilentlyContinue) {
 if ($LASTEXITCODE -ne 0) {
     throw "Environment setup failed with exit code $LASTEXITCODE."
 }
+

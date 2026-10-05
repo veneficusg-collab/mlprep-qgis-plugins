@@ -1,3 +1,4 @@
+
 import json
 import tempfile
 import unittest
@@ -179,3 +180,4 @@ class Step4PublicationTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+

@@ -1,0 +1,11 @@
+name,column_name,path,crs_match,transform_match,width_match,height_match,nodata_value,dtype,status
+twi,twi,E:\MLPREP\MLPREP\Objectives\Objective 4\Codes_V2\Sample Data\Input\Raster\Predictors\Topographic\Filtered\Makilala_TWI_Final_LPF_PRSTM51N.tif,True,True,True,True,-3.4028234663852886e+38,float32,OK
+slope,slope,E:\MLPREP\MLPREP\Objectives\Objective 4\Codes_V2\Sample Data\Input\Raster\Predictors\Topographic\Filtered\Makilala_Slope_LPF_PRSTM51N.tif,True,True,True,True,-3.4028234663852886e+38,float32,OK
+profile_curvature,profile_curvature,E:\MLPREP\MLPREP\Objectives\Objective 4\Codes_V2\Sample Data\Input\Raster\Predictors\Topographic\Filtered\Makilala_ProfCurv_LPF_PRSTM51N.tif,True,True,True,True,-3.4028234663852886e+38,float32,OK
+plan_curvature,plan_curvature,E:\MLPREP\MLPREP\Objectives\Objective 4\Codes_V2\Sample Data\Input\Raster\Predictors\Topographic\Filtered\Makilala_PlanCurv_LPF_PRSTM51N.tif,True,True,True,True,-3.4028234663852886e+38,float32,OK
+ndvi,ndvi,E:\MLPREP\MLPREP\Objectives\Objective 4\Codes_V2\Sample Data\Input\Raster\Predictors\Topographic\Filtered\Makilala_NDVI_LPF_PRSTM51N.tif,True,True,True,True,-3.4028234663852886e+38,float32,OK
+geomorphology,geomorphology,E:\MLPREP\MLPREP\Objectives\Objective 4\Codes_V2\Sample Data\Input\Raster\Predictors\Topographic\Filtered\Makilala_Geomorphology_PRSTM51N.tif,True,True,True,True,15.0,uint8,OK
+dugsurf,dugsurf,E:\MLPREP\MLPREP\Objectives\Objective 4\Codes_V2\Sample Data\Input\Raster\Predictors\Topographic\Filtered\Makilala_DUGSurf_LPF_PRSTM51N.tif,True,True,True,True,-3.4028234663852886e+38,float32,OK
+dstgsurf,dstgsurf,E:\MLPREP\MLPREP\Objectives\Objective 4\Codes_V2\Sample Data\Input\Raster\Predictors\Topographic\Filtered\Makilala_DStGSurf_LPF_PRSTM51N.tif,True,True,True,True,-3.4028234663852886e+38,float32,OK
+proximity_to_stream,proximity_to_stream,E:\MLPREP\MLPREP\Objectives\Objective 4\Codes_V2\Sample Data\Input\Raster\Predictors\Topographic\Makilala_PtS_PRSTM51N.tif,True,True,True,True,-3.4028234663852886e+38,float32,OK
+landslide_id,landslide_id,E:\MLPREP\MLPREP\Objectives\Objective 4\Codes_V2\Sample Data\Output\Latest Runs\Step1\landslide_id_raster.tif,True,True,True,True,-9999.0,int32,OK

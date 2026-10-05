@@ -1,0 +1,214 @@
+{
+  "step": {
+    "name": "step4_deposition_zone_mpi_wrapper",
+    "description": "Python config/reporting wrapper around the C++/MPI Step 4 routing executable."
+  },
+  "engine": {
+    "mode": "cpp_mpi",
+    "executable": "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\steps\\step4_deposition_zone\\cpp_mpi_port\\build_manual\\step4_deposition_zone_mpi.exe",
+    "executable_sha256": "dc93b9f567c89f818246cedf02e7fa9c99699a9e11a79e5f5091538516bff66b",
+    "processes": 8,
+    "returncode": 0,
+    "engine_wall_seconds": 25.375535900002433,
+    "wrapper_total_elapsed_seconds": 25.911963800001104,
+    "engine_timing_seconds": {
+      "average_read": 8.959497150000061,
+      "average_compute": 3.1595504749998327,
+      "average_write": 11.11043997500019,
+      "average_total": 23.229487600000084
+    },
+    "command": [
+      "C:\\Program Files\\Microsoft MPI\\Bin\\mpiexec.exe",
+      "-n",
+      "8",
+      "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\steps\\step4_deposition_zone\\cpp_mpi_port\\build_manual\\step4_deposition_zone_mpi.exe",
+      "--fel",
+      "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Input\\Raster\\Shared Inputs\\Makilala_DEM_Fill_PRSTM51N.tif",
+      "--ang",
+      "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Input\\Raster\\Shared Inputs\\Makilala_DFD_PRSTM51N.tif",
+      "--source",
+      "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Input\\Raster\\Shared Inputs\\Makilala_EIL_PRSTM51N.tif",
+      "--dfi",
+      "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Output\\Latest Runs\\Step3\\domain_application_dfi\\ml_dfi_probability_full_valid_predictor_domain.tif",
+      "--alpha",
+      "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Output\\Latest Runs\\Step0\\Makilala_BaselineAlpha_PRSTM51N.tif",
+      "--out-alpha",
+      "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Output\\Latest Runs\\Step4\\step4_dynamic_alpha.tif",
+      "--out-beta",
+      "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Output\\Latest Runs\\Step4\\step4_beta_angle.tif",
+      "--out-dfs",
+      "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Output\\Latest Runs\\Step4\\step4_dfs.tif",
+      "--out-mask",
+      "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Output\\Latest Runs\\Step4\\step4_runout_mask.tif",
+      "--out-deposition",
+      "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Output\\Latest Runs\\Step4\\step4_pure_depositional_mask.tif",
+      "--threshold",
+      "0.2",
+      "--dfi-mid",
+      "0.69",
+      "--alpha-gain-per-meter",
+      "0.03333"
+    ]
+  },
+  "config": {
+    "path": "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\config\\.runtime\\step4_deposition_zone.effective.json",
+    "sha256": "4d1b274cae3681212a9031cacd0fcacdcc88debcf82daf75393ebff92cafcc19"
+  },
+  "inputs": {
+    "dem_fel_raster": "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Input\\Raster\\Shared Inputs\\Makilala_DEM_Fill_PRSTM51N.tif",
+    "dinf_flow_raster": "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Input\\Raster\\Shared Inputs\\Makilala_DFD_PRSTM51N.tif",
+    "source_raster": "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Input\\Raster\\Shared Inputs\\Makilala_EIL_PRSTM51N.tif",
+    "dfi_raster": "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Output\\Latest Runs\\Step3\\domain_application_dfi\\ml_dfi_probability_full_valid_predictor_domain.tif",
+    "alpha_raster": "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Output\\Latest Runs\\Step0\\Makilala_BaselineAlpha_PRSTM51N.tif",
+    "validation_domain_raster": ""
+  },
+  "parameters": {
+    "proportion_threshold": 0.2,
+    "path_mode": "flow",
+    "angle_units_contract": "TauDEM radians",
+    "alpha_rule": "path_dependent_dynamic_alpha",
+    "alpha_gain_per_meter": 0.03333,
+    "dfi_mid": 0.69,
+    "max_planimetric_flow_path_length_m": 200.0
+  },
+  "counts": {
+    "terrain_valid_cells": 13762795,
+    "alpha_valid_cells": 7204484,
+    "marked_source_cells": 6362269,
+    "source_cells": 6264007,
+    "source_cells_without_valid_alpha": 98262,
+    "dfi_valid_cells": 13711832,
+    "terrain_valid_cells_without_valid_dfi": 50963,
+    "processed_cells": 13762795,
+    "candidate_evaluations": 10884073,
+    "accepted_candidate_propagations": 10346561,
+    "candidate_cells_skipped_missing_dfi": 69601,
+    "candidates_skipped_runout_length_cap": 79715,
+    "runout_cells": 6921500,
+    "pure_depositional_cells": 657493,
+    "remaining_dependency_cells": 0,
+    "non_source_terrain_valid_cells": 7498788
+  },
+  "alpha_stats": {
+    "source_alpha_unclamped": {
+      "min": 9,
+      "max": 30,
+      "mean": 19.541426757664862
+    },
+    "dynamic_alpha_final": {
+      "min": 6,
+      "max": 31.302680304379262
+    }
+  },
+  "outputs": {
+    "dynamic_alpha_raster": "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Output\\Latest Runs\\Step4\\step4_dynamic_alpha.tif",
+    "beta_angle_raster": "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Output\\Latest Runs\\Step4\\step4_beta_angle.tif",
+    "dfs_raster": "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Output\\Latest Runs\\Step4\\step4_dfs.tif",
+    "runout_mask": "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Output\\Latest Runs\\Step4\\step4_runout_mask.tif",
+    "depositional_mask": "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Output\\Latest Runs\\Step4\\step4_pure_depositional_mask.tif",
+    "summary_json": "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Output\\Latest Runs\\Step4\\step4_runout_summary.json",
+    "validation_summary_csv": "",
+    "validation_summary_json": ""
+  },
+  "artifacts": {
+    "dynamic_alpha_raster": {
+      "size_bytes": 31076570,
+      "rows": 3698,
+      "cols": 5710
+    },
+    "beta_angle_raster": {
+      "size_bytes": 6828459,
+      "rows": 3698,
+      "cols": 5710
+    },
+    "dfs_raster": {
+      "size_bytes": 15722939,
+      "rows": 3698,
+      "cols": 5710
+    },
+    "runout_mask": {
+      "size_bytes": 2092933,
+      "rows": 3698,
+      "cols": 5710
+    },
+    "depositional_mask": {
+      "size_bytes": 1744935,
+      "rows": 3698,
+      "cols": 5710
+    }
+  },
+  "preflight": {
+    "status": "passed",
+    "warnings": [
+      "Excluded 98262 source-marked cells from initiation because alpha is missing or NoData.",
+      "Initiating source cells cover 45.51% of terrain-valid cells, above fixed max_source_fraction=30.00%."
+    ],
+    "grid": {
+      "cols": 5710,
+      "rows": 3698,
+      "dx": 5.0,
+      "dy": 5.0,
+      "projected_crs_units": "meter",
+      "optional_validation_raster_count": 0
+    },
+    "counts": {
+      "terrain_valid_cells": 13762795,
+      "alpha_valid_cells": 7204484,
+      "marked_source_cells": 6362269,
+      "source_cells": 6264007,
+      "source_cells_without_valid_alpha": 98262,
+      "dfi_valid_cells": 13711832,
+      "terrain_valid_cells_without_valid_dfi": 50963,
+      "processed_cells": 13762795,
+      "candidate_evaluations": 10884073,
+      "accepted_candidate_propagations": 10346561,
+      "candidate_cells_skipped_missing_dfi": 69601,
+      "candidates_skipped_runout_length_cap": 79715,
+      "runout_cells": 6921500,
+      "pure_depositional_cells": 657493,
+      "remaining_dependency_cells": 0
+    },
+    "fractions": {
+      "source_fraction": 0.4551406164227542,
+      "marked_source_fraction": 0.4622802998954791,
+      "dfi_valid_fraction_over_terrain": 0.9962970457672297
+    },
+    "ranges": {
+      "dinf_flow_radians": [
+        0,
+        6.2831854820251465
+      ],
+      "dfi": [
+        0.011843796819448471,
+        0.9948181509971619
+      ],
+      "source_alpha_degrees": {
+        "min": 9,
+        "max": 30,
+        "mean": 19.541426757664862
+      },
+      "dynamic_alpha_degrees": {
+        "min": 6,
+        "max": 31.302680304379262
+      },
+      "alpha_valid_range_degrees": [
+        1.0,
+        90.0
+      ],
+      "source_alpha_required_range_degrees": [
+        6.0,
+        72.0
+      ]
+    },
+    "engine_value_validation": "passed",
+    "output_parent_dirs": [
+      "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Output\\Latest Runs\\Step4"
+    ]
+  },
+  "validation": null,
+  "notes": [
+    "The C++/MPI executable performs the heavy routing; this wrapper handles config and reporting.",
+    "Input value validation and routing counters are emitted by the distributed C++ engine.",
+    "The 200 m cap is accumulated planimetric D-Infinity flow-path length, not three-dimensional terrain-surface distance."
+  ]
+}

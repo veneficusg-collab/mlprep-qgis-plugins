@@ -1,3 +1,4 @@
+
 import importlib.util
 import json
 import logging
@@ -255,3 +256,4 @@ def test_sparse_block_extraction_matches_requested_cells(tmp_path: Path) -> None
     assert extracted[2] == pytest.approx(98.0)
     assert nodata.tolist() == [False, True, False]
     assert not nonfinite.any()
+

@@ -1,3 +1,4 @@
+
 # ML-DFI Objective 4 Workspace
 
 This workspace contains a staged geospatial Python workflow for pixel-based
@@ -233,3 +234,4 @@ remain supported.
 - Shared aligned rasters used by multiple later steps live under
   `Sample Data/Input/Raster/Shared Inputs`; step-specific inputs remain in their
   own `Step4 Inputs`, `Step5 Inputs`, or `Step6 Inputs` folders.
+

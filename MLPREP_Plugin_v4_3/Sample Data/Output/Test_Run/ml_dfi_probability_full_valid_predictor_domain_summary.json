@@ -1,0 +1,61 @@
+{
+  "model_path": "/Users/ml-prepproject/Library/Application Support/QGIS/QGIS3/profiles/default/python/plugins/MLPREP_Plugin_v4_3/model_dfi/trained_ml_dfi_model.pkl",
+  "model_sha256": "009f584d7326d483b777909b78d25ef2c629312cfbcb4189e86102a7c78ee9fb",
+  "metadata_path": "/Users/ml-prepproject/Library/Application Support/QGIS/QGIS3/profiles/default/python/plugins/MLPREP_Plugin_v4_3/model_dfi/model_metadata.json",
+  "metadata_sha256": "7e35fb05076af3b56bb5c5f8b810d6b4ba036b6e3fca21c38b554372627bdaf8",
+  "predictor_config_json": "/Users/ml-prepproject/Library/Application Support/QGIS/QGIS3/profiles/default/python/plugins/MLPREP_Plugin_v4_3/Sample Data/predictor_config.json",
+  "reference_raster_path": "/Users/ml-prepproject/Library/Application Support/QGIS/QGIS3/profiles/default/python/plugins/MLPREP_Plugin_v4_3/Sample Data/input/raster/Predictors/Topographic/Filtered/Makilala_Slope_LPF_PRSTM51N.tif",
+  "output_probability_raster": "ml_dfi_probability_full_valid_predictor_domain.tif",
+  "output_probability_raster_sha256": "b4a7d15ae495107cf4c4a72029e01ae2137e0b24bec4c8dc3fa5a563e4c6f1b4",
+  "predictor_columns": [
+    "twi",
+    "slope",
+    "profile_curvature",
+    "plan_curvature",
+    "ndvi",
+    "geomorphology",
+    "dugsurf",
+    "dstgsurf"
+  ],
+  "categorical_predictor_columns": [
+    "geomorphology"
+  ],
+  "categorical_levels": {
+    "geomorphology": [
+      "1.0",
+      "2.0",
+      "3.0",
+      "4.0",
+      "5.0",
+      "6.0"
+    ]
+  },
+  "full_domain_shap": {
+    "enabled": true,
+    "method": "xgboost_pred_contribs",
+    "sampling_method": "deterministic_stratified_by_predicted_dfi_probability",
+    "probability_groups": {
+      "low_dfi": "P < 0.30",
+      "medium_dfi": "0.30 <= P < 0.70",
+      "high_dfi": "P >= 0.70"
+    },
+    "sample_group_counts": {
+      "low_dfi": 20000,
+      "medium_dfi": 20000,
+      "high_dfi": 20000
+    },
+    "sample_count": 60000,
+    "importance_path": "full_domain_shap_feature_importance.csv",
+    "sample_path": "full_domain_shap_sample.csv",
+    "mean_bias_contribution": 0.10265478491783142,
+    "contribution_output": "xgboost_raw_margin",
+    "feature_importance_plot_path": "full_domain_shap_feature_importance.png",
+    "summary_plot_path": "full_domain_shap_summary_beeswarm.png",
+    "dependence_plot_path": "full_domain_shap_dependence_plots.png"
+  },
+  "predicted_pixels": 13711832,
+  "valid_predictor_pixels": 13711832,
+  "probability_min": 0.005075792316347361,
+  "probability_max": 0.9879103899002075,
+  "probability_mean": 0.5732593919181428
+}

@@ -1,0 +1,64 @@
+{
+  "input_sample_table": "../../Sample Data/Output/Latest Runs/Step2/ml_dfi_pixel_samples.csv",
+  "output_dir": "../../Sample Data/Output/Latest Runs/Step3/model_training_validation",
+  "input_format": "auto",
+  "target_column": "target",
+  "id_columns": [
+    "sample_id",
+    "row",
+    "col",
+    "x",
+    "y"
+  ],
+  "group_columns": [
+    "landslide_id"
+  ],
+  "drop_columns": [
+    "sample_role",
+    "split"
+  ],
+  "categorical_columns": [
+    "geomorphology"
+  ],
+  "auto_detect_categorical": false,
+  "model_type": "xgboost",
+  "random_seed": 42,
+  "missing_predictor_strategy": "xgboost_native_else_median_impute",
+  "class_imbalance_strategy": "auto_scale_pos_weight",
+  "enable_hyperparameter_tuning": true,
+  "tuning_trials": 100,
+  "tuning_metric": "PR_AUC",
+  "xgboost_params": {
+    "n_estimators": 800,
+    "max_depth": 4,
+    "learning_rate": 0.03,
+    "subsample": 0.8,
+    "colsample_bytree": 0.8,
+    "min_child_weight": 3,
+    "reg_alpha": 0.0,
+    "reg_lambda": 3.0,
+    "objective": "binary:logistic",
+    "eval_metric": "aucpr",
+    "tree_method": "hist",
+    "early_stopping_rounds": 100
+  },
+  "random_forest_params": {
+    "n_estimators": 500,
+    "max_depth": null,
+    "min_samples_leaf": 2,
+    "class_weight": "balanced_subsample",
+    "n_jobs": -1
+  },
+  "probability_threshold": "optimize_f1",
+  "fixed_threshold": 0.5,
+  "write_feature_importance": true,
+  "write_predictions": true,
+  "write_model": true,
+  "write_plots": true,
+  "write_explainability": true,
+  "shap_sample_size": 5000,
+  "shap_max_display_features": 12,
+  "partial_dependence_sample_size": 2500,
+  "partial_dependence_grid_resolution": 25,
+  "partial_dependence_max_categories": 12
+}

@@ -1,3 +1,4 @@
+
 from __future__ import annotations
 
 import importlib.util
@@ -88,3 +89,4 @@ def test_windowed_run_writes_expected_outputs(tmp_path: Path) -> None:
     assert metadata["valid_cell_count"] == 5
     assert metadata["non_source_class_zero_cell_count"] == 1
     assert not list(tmp_path.glob(".*.tmp*"))
+

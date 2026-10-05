@@ -1,3 +1,4 @@
+
 # Central Workflow Configuration
 
 ## Purpose
@@ -119,3 +120,4 @@ The existing per-step launchers and `config.default.json` files remain valid.
 They are the tested base contracts and can still be invoked explicitly for
 experiments. The centralized runner is the recommended handoff interface.
 Running a per-step launcher without arguments also uses the centralized config.
+

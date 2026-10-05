@@ -1,3 +1,4 @@
+
 ﻿from __future__ import annotations
 
 import atexit
@@ -438,3 +439,4 @@ def execute_step1_polygon_job(job: Step1PolygonJob) -> Step1PolygonWorkerResult:
             ),
             total_t0,
         )
+

@@ -1,0 +1,13 @@
+{
+  "runout_cleanup_only": {
+    "runout_mask_raster": "../../Sample Data/Output/Latest Runs/Step4/step4_runout_mask.tif",
+    "source_mask_raster": "../../Sample Data/Input/Raster/Shared Inputs/Makilala_EIL_PRSTM51N.tif",
+    "source_contributing_area_raster": "../../Sample Data/Input/Raster/Step5 Inputs/Makilala_SWCA_PRSTM51N.tif",
+    "dinf_flow_raster": "../../Sample Data/Input/Raster/Shared Inputs/Makilala_DFD_PRSTM51N.tif",
+    "output_dir": "../../Sample Data/Output/Step5_CleanupOnly/step5_cleanup_dinf_buffer5m_20260917",
+    "min_runout_source_area_m2": 200.0,
+    "min_dinf_flow_proportion": 0.2,
+    "edge_seed_buffer_m": 5.0,
+    "overwrite": false
+  }
+}

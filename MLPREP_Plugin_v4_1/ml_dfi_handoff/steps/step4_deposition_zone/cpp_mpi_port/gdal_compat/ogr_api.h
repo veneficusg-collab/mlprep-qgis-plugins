@@ -1,3 +1,4 @@
+
 #ifndef STEP4_GDAL_COMPAT_OGR_API_H
 #define STEP4_GDAL_COMPAT_OGR_API_H
 
@@ -20,3 +21,4 @@ OGRwkbGeometryType OGR_L_GetGeomType(OGRLayerH);
 #endif
 
 #endif
+

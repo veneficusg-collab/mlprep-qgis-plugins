@@ -1,3 +1,4 @@
+
 param(
     [Parameter(Mandatory = $true)]
     [string]$Step,
@@ -75,3 +76,4 @@ finally {
 
 Write-Host "Completed $Step with exit code $exitCode"
 exit $exitCode
+

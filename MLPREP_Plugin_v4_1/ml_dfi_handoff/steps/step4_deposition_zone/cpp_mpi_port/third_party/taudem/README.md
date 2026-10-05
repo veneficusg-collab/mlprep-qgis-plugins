@@ -1,3 +1,4 @@
+
 # Vendored TauDEM Compatibility Sources
 
 This directory contains the small TauDEM source subset required to compile the
@@ -14,3 +15,4 @@ developer's desktop. The retained `license.txt` applies to these files.
 One portability-only correction was made in `src/linearpart.h`: a diagnostic
 `printf` uses a format compatible with the unsigned 64-bit partition index
 type. No routing or raster-processing logic was changed.
+

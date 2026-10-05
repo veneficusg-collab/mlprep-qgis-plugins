@@ -1,0 +1,743 @@
+{
+  "input_paths": {
+    "runout_mask_raster": "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Output\\Latest Runs\\Step4\\step4_runout_mask.tif",
+    "dfi_raster": "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Output\\Latest Runs\\Step3\\domain_application_dfi\\ml_dfi_probability_full_valid_predictor_domain.tif",
+    "dem_raster": "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Input\\Raster\\Shared Inputs\\Makilala_DEM_Fill_PRSTM51N.tif",
+    "source_mask_raster": "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Input\\Raster\\Shared Inputs\\Makilala_EIL_PRSTM51N.tif",
+    "stream_mask_raster": "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Input\\Raster\\Step5 Inputs\\Makilala_StreamMask_PRSTM51N.tif",
+    "source_contributing_area_raster": "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Input\\Raster\\Step5 Inputs\\Makilala_SWCA_PRSTM51N.tif"
+  },
+  "output_paths": {
+    "output_spread_mask": "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Output\\Latest Runs\\Step5\\post_depositional_spread_mask.tif",
+    "output_combined_mask": "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Output\\Latest Runs\\Step5\\post_depositional_combined_mask.tif",
+    "output_seed_mask": "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Output\\Latest Runs\\Step5\\post_depositional_seed_mask.tif",
+    "output_cleaned_runout_mask": "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Output\\Latest Runs\\Step5\\post_depositional_cleaned_runout_mask.tif",
+    "output_removed_runout_mask": "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Output\\Latest Runs\\Step5\\post_depositional_removed_runout_mask.tif",
+    "output_summary_json": "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Output\\Latest Runs\\Step5\\post_depositional_spread_summary.json",
+    "output_min_elev_diff": "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Output\\Latest Runs\\Step5\\post_depositional_min_elev_diff.tif",
+    "output_source_row": "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Output\\Latest Runs\\Step5\\post_depositional_source_row.tif",
+    "output_source_col": "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Output\\Latest Runs\\Step5\\post_depositional_source_col.tif",
+    "output_source_elevation": "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Output\\Latest Runs\\Step5\\post_depositional_spread_mask_seed_elevation.tif",
+    "output_computed_spread_radius": "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Output\\Latest Runs\\Step5\\post_depositional_spread_mask_computed_spread_radius.tif",
+    "output_source_contributing_area": "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Output\\Latest Runs\\Step5\\post_depositional_spread_mask_source_contributing_area.tif",
+    "output_source_contribution_index": "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Output\\Latest Runs\\Step5\\post_depositional_spread_mask_source_contribution_index.tif"
+  },
+  "rows": 3698,
+  "cols": 5710,
+  "pixel_size": [
+    5.0,
+    5.0
+  ],
+  "geotransform": [
+    719707.5,
+    5.0,
+    0.0,
+    774782.5,
+    0.0,
+    -5.0
+  ],
+  "crs_authority": null,
+  "crs_wkt": "PROJCS[\"PRS_1992_UTM_Zone_51N\",GEOGCS[\"PRS92\",DATUM[\"Philippine_Reference_System_1992\",SPHEROID[\"Clarke 1866\",6378206.4,294.978698199999,AUTHORITY[\"EPSG\",\"7008\"]],AUTHORITY[\"EPSG\",\"6683\"]],PRIMEM[\"Greenwich\",0],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]],AUTHORITY[\"EPSG\",\"4683\"]],PROJECTION[\"Transverse_Mercator\"],PARAMETER[\"latitude_of_origin\",0],PARAMETER[\"central_meridian\",123],PARAMETER[\"scale_factor\",0.9996],PARAMETER[\"false_easting\",500000],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Easting\",EAST],AXIS[\"Northing\",NORTH]]",
+  "dfi_threshold": 0.69,
+  "max_relative_rise_m": 1.0,
+  "min_spread_radius_m": 5.0,
+  "max_spread_radius_m": 30.0,
+  "source_contributing_area_reference": 4400.0,
+  "spread_mode": "runout_cleanup_edge_seed_source_contribution_relief_connected",
+  "min_runout_source_area_m2": 200.0,
+  "original_runout_cells": 6921500,
+  "area_removed_runout_cells": 2604188,
+  "disconnected_runout_cells": 5979,
+  "removed_runout_cells": 2610167,
+  "removed_runout_percent": 37.71100195044427,
+  "cleaned_runout_cells": 4311333,
+  "valid_runout_cells": 4311333,
+  "seed_cells": 149937,
+  "seeds_with_zero_contributing_source_area": 0,
+  "seeds_assigned_min_radius": 0,
+  "seeds_assigned_max_or_near_max_radius": 13481,
+  "spread_cells_added": 251064,
+  "combined_footprint_cells": 4562397,
+  "source_cells_processed": 149937,
+  "candidate_evaluations": 3228308,
+  "neighbor_offset_count": 112,
+  "neighbor_offsets": [
+    [
+      0,
+      -1,
+      5.0
+    ],
+    [
+      0,
+      1,
+      5.0
+    ],
+    [
+      -1,
+      0,
+      5.0
+    ],
+    [
+      1,
+      0,
+      5.0
+    ],
+    [
+      -1,
+      -1,
+      7.0710678118654755
+    ],
+    [
+      -1,
+      1,
+      7.0710678118654755
+    ],
+    [
+      1,
+      -1,
+      7.0710678118654755
+    ],
+    [
+      1,
+      1,
+      7.0710678118654755
+    ],
+    [
+      0,
+      -2,
+      10.0
+    ],
+    [
+      0,
+      2,
+      10.0
+    ],
+    [
+      -2,
+      0,
+      10.0
+    ],
+    [
+      2,
+      0,
+      10.0
+    ],
+    [
+      -1,
+      -2,
+      11.180339887498949
+    ],
+    [
+      -1,
+      2,
+      11.180339887498949
+    ],
+    [
+      1,
+      -2,
+      11.180339887498949
+    ],
+    [
+      1,
+      2,
+      11.180339887498949
+    ],
+    [
+      -2,
+      -1,
+      11.180339887498949
+    ],
+    [
+      -2,
+      1,
+      11.180339887498949
+    ],
+    [
+      2,
+      -1,
+      11.180339887498949
+    ],
+    [
+      2,
+      1,
+      11.180339887498949
+    ],
+    [
+      -2,
+      -2,
+      14.142135623730951
+    ],
+    [
+      -2,
+      2,
+      14.142135623730951
+    ],
+    [
+      2,
+      -2,
+      14.142135623730951
+    ],
+    [
+      2,
+      2,
+      14.142135623730951
+    ],
+    [
+      0,
+      -3,
+      15.0
+    ],
+    [
+      0,
+      3,
+      15.0
+    ],
+    [
+      -3,
+      0,
+      15.0
+    ],
+    [
+      3,
+      0,
+      15.0
+    ],
+    [
+      -1,
+      -3,
+      15.811388300841896
+    ],
+    [
+      -1,
+      3,
+      15.811388300841896
+    ],
+    [
+      1,
+      -3,
+      15.811388300841896
+    ],
+    [
+      1,
+      3,
+      15.811388300841896
+    ],
+    [
+      -3,
+      -1,
+      15.811388300841896
+    ],
+    [
+      -3,
+      1,
+      15.811388300841896
+    ],
+    [
+      3,
+      -1,
+      15.811388300841896
+    ],
+    [
+      3,
+      1,
+      15.811388300841896
+    ],
+    [
+      -2,
+      -3,
+      18.027756377319946
+    ],
+    [
+      -2,
+      3,
+      18.027756377319946
+    ],
+    [
+      2,
+      -3,
+      18.027756377319946
+    ],
+    [
+      2,
+      3,
+      18.027756377319946
+    ],
+    [
+      -3,
+      -2,
+      18.027756377319946
+    ],
+    [
+      -3,
+      2,
+      18.027756377319946
+    ],
+    [
+      3,
+      -2,
+      18.027756377319946
+    ],
+    [
+      3,
+      2,
+      18.027756377319946
+    ],
+    [
+      0,
+      -4,
+      20.0
+    ],
+    [
+      0,
+      4,
+      20.0
+    ],
+    [
+      -4,
+      0,
+      20.0
+    ],
+    [
+      4,
+      0,
+      20.0
+    ],
+    [
+      -1,
+      -4,
+      20.615528128088304
+    ],
+    [
+      -1,
+      4,
+      20.615528128088304
+    ],
+    [
+      1,
+      -4,
+      20.615528128088304
+    ],
+    [
+      1,
+      4,
+      20.615528128088304
+    ],
+    [
+      -4,
+      -1,
+      20.615528128088304
+    ],
+    [
+      -4,
+      1,
+      20.615528128088304
+    ],
+    [
+      4,
+      -1,
+      20.615528128088304
+    ],
+    [
+      4,
+      1,
+      20.615528128088304
+    ],
+    [
+      -3,
+      -3,
+      21.213203435596427
+    ],
+    [
+      -3,
+      3,
+      21.213203435596427
+    ],
+    [
+      3,
+      -3,
+      21.213203435596427
+    ],
+    [
+      3,
+      3,
+      21.213203435596427
+    ],
+    [
+      -2,
+      -4,
+      22.360679774997898
+    ],
+    [
+      -2,
+      4,
+      22.360679774997898
+    ],
+    [
+      2,
+      -4,
+      22.360679774997898
+    ],
+    [
+      2,
+      4,
+      22.360679774997898
+    ],
+    [
+      -4,
+      -2,
+      22.360679774997898
+    ],
+    [
+      -4,
+      2,
+      22.360679774997898
+    ],
+    [
+      4,
+      -2,
+      22.360679774997898
+    ],
+    [
+      4,
+      2,
+      22.360679774997898
+    ],
+    [
+      0,
+      -5,
+      25.0
+    ],
+    [
+      0,
+      5,
+      25.0
+    ],
+    [
+      -3,
+      -4,
+      25.0
+    ],
+    [
+      -3,
+      4,
+      25.0
+    ],
+    [
+      3,
+      -4,
+      25.0
+    ],
+    [
+      3,
+      4,
+      25.0
+    ],
+    [
+      -4,
+      -3,
+      25.0
+    ],
+    [
+      -4,
+      3,
+      25.0
+    ],
+    [
+      4,
+      -3,
+      25.0
+    ],
+    [
+      4,
+      3,
+      25.0
+    ],
+    [
+      -5,
+      0,
+      25.0
+    ],
+    [
+      5,
+      0,
+      25.0
+    ],
+    [
+      -1,
+      -5,
+      25.495097567963924
+    ],
+    [
+      -1,
+      5,
+      25.495097567963924
+    ],
+    [
+      1,
+      -5,
+      25.495097567963924
+    ],
+    [
+      1,
+      5,
+      25.495097567963924
+    ],
+    [
+      -5,
+      -1,
+      25.495097567963924
+    ],
+    [
+      -5,
+      1,
+      25.495097567963924
+    ],
+    [
+      5,
+      -1,
+      25.495097567963924
+    ],
+    [
+      5,
+      1,
+      25.495097567963924
+    ],
+    [
+      -2,
+      -5,
+      26.92582403567252
+    ],
+    [
+      -2,
+      5,
+      26.92582403567252
+    ],
+    [
+      2,
+      -5,
+      26.92582403567252
+    ],
+    [
+      2,
+      5,
+      26.92582403567252
+    ],
+    [
+      -5,
+      -2,
+      26.92582403567252
+    ],
+    [
+      -5,
+      2,
+      26.92582403567252
+    ],
+    [
+      5,
+      -2,
+      26.92582403567252
+    ],
+    [
+      5,
+      2,
+      26.92582403567252
+    ],
+    [
+      -4,
+      -4,
+      28.284271247461902
+    ],
+    [
+      -4,
+      4,
+      28.284271247461902
+    ],
+    [
+      4,
+      -4,
+      28.284271247461902
+    ],
+    [
+      4,
+      4,
+      28.284271247461902
+    ],
+    [
+      -3,
+      -5,
+      29.154759474226502
+    ],
+    [
+      -3,
+      5,
+      29.154759474226502
+    ],
+    [
+      3,
+      -5,
+      29.154759474226502
+    ],
+    [
+      3,
+      5,
+      29.154759474226502
+    ],
+    [
+      -5,
+      -3,
+      29.154759474226502
+    ],
+    [
+      -5,
+      3,
+      29.154759474226502
+    ],
+    [
+      5,
+      -3,
+      29.154759474226502
+    ],
+    [
+      5,
+      3,
+      29.154759474226502
+    ],
+    [
+      0,
+      -6,
+      30.0
+    ],
+    [
+      0,
+      6,
+      30.0
+    ],
+    [
+      -6,
+      0,
+      30.0
+    ],
+    [
+      6,
+      0,
+      30.0
+    ]
+  ],
+  "dfi_stats": {
+    "min": 0.011843796819448471,
+    "max": 0.9948181509971619
+  },
+  "source_contributing_area_stats": {
+    "min": 200.0025510787964,
+    "max": 24544.41680908203,
+    "mean": 1542.6375445696442
+  },
+  "source_contribution_index_stats": {
+    "min": 0.045455125245181,
+    "max": 1.0,
+    "mean": 0.2469546877948287
+  },
+  "computed_spread_radius_stats": {
+    "min": 6.136378131129525,
+    "max": 30.0,
+    "mean": 11.173867194870718
+  },
+  "rejection_counts": {
+    "already_in_runout": 1970826,
+    "invalid_dfi": 3709,
+    "dfi_not_above_threshold": 123400,
+    "invalid_dem": 0,
+    "too_high_above_seed": 346093,
+    "out_of_bounds": 9,
+    "disconnected_from_source": 55696
+  },
+  "warnings": [],
+  "timings_seconds": {
+    "metadata_preflight": 0.286556399998517,
+    "raster_read": 3.7495861999996123,
+    "core_compute": 18.179449499999464,
+    "output_write_before_summary": 3.4539323000026343,
+    "total_before_summary": 25.670511699998315
+  },
+  "notes": [
+    "Step 5 first removes Step 4 runout cells whose converted source contributing area is less than min_runout_source_area_m2.",
+    "Step 5 then removes remaining runout cells that are not 8-connected to the source mask through the retained runout footprint.",
+    "The cleaned runout mask is then used for seed selection, candidate exclusion, and the final combined footprint.",
+    "This implementation is seed-driven only: seed candidates are DFI-qualified non-source edge cells from the cleaned runout mask.",
+    "A cleaned runout cell becomes an edge seed when it touches at least one valid non-runout neighbor.",
+    "Runout cells marked by the source mask are excluded from seed selection and therefore do not initiate post-depositional spread.",
+    "Runout cells marked by the stream mask are excluded from seed selection to avoid stream-accumulation cells forcing inflated spread radii.",
+    "Spread radius is controlled by a precomputed TauDEM weighted D-infinity source contributing-cell-count raster.",
+    "The source contributing-area raster stores the D-infinity-weighted number of contributing source cells; Step 5 converts it to square meters by multiplying by dx * dy.",
+    "Spread is allowed in all directions within the computed source-contribution radius; there is no plan-curvature confinement or directional fan filter.",
+    "Final spread remains constrained by DFI, DEM validity, seed-relative elevation rise, radius, and local connectivity filters.",
+    "Candidate connectivity is enforced only after DFI, DEM, and radius eligibility are satisfied.",
+    "The relative relief rule is seed-relative: a candidate cell cannot join if it is more than max_relative_rise_m above its edge seed cell.",
+    "Seeds with zero source contributing area are assigned min_spread_radius_m and reported as warnings; nodata at any Step 4 runout cell is an input error.",
+    "The precomputed neighbor-offset list spans max_spread_radius_m, and each source evaluates only the subset within its own computed radius."
+  ],
+  "metadata": {
+    "runout_cleanup_rule": "Remove runout cells when raw_source_contributing_cell_count * dx * dy < min_runout_source_area_m2.",
+    "runout_source_connectivity_rule": "After source-area cleanup, keep only retained runout components that touch or are 8-neighbor-adjacent to source-mask cells.",
+    "seed_selection": "DFI-qualified non-source, non-stream cleaned-runout cells that touch at least one valid outside-runout neighbor.",
+    "radius_conditioning": "source_contribution_index = min((raw_source_contributing_cell_count * dx * dy) / source_contributing_area_reference, 1.0), clamped to [0, 1].",
+    "dfi_eligible_runout_cells_before_edge_filter": 2565602,
+    "source_runout_cells_excluded_from_seed_selection": 3951950,
+    "stream_runout_cells_excluded_from_seed_selection": 136500,
+    "edge_seed_rule": "A seed must touch at least one valid non-runout 8-neighbor cell.",
+    "debug_rasters_store_values_at": "seed_cells",
+    "conditioning_statistics_scope": "edge_seed_cells",
+    "source_mask_contract": "Binary source mask only: 1 = source, 0 = non-source.",
+    "source_contributing_area_contract": "Non-negative TauDEM D-infinity weighted source-cell-count raster derived from the binary source mask; converted to square meters internally as raw_count * dx * dy.",
+    "runout_cells_missing_source_contributing_area": 0,
+    "valid_dfi_cells": 13711832,
+    "invalid_dfi_cells": 7403748,
+    "preflight": {
+      "status": "metadata_passed",
+      "grid": {
+        "rows": 3698,
+        "cols": 5710,
+        "dx": 5.0,
+        "dy": 5.0,
+        "crs_authority": null
+      },
+      "inputs": {
+        "runout_mask_raster": {
+          "path": "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Output\\Latest Runs\\Step4\\step4_runout_mask.tif",
+          "dtype": "Int16",
+          "nodata": -32768.0
+        },
+        "dfi_raster": {
+          "path": "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Output\\Latest Runs\\Step3\\domain_application_dfi\\ml_dfi_probability_full_valid_predictor_domain.tif",
+          "dtype": "Float32",
+          "nodata": -9999.0
+        },
+        "dem_raster": {
+          "path": "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Input\\Raster\\Shared Inputs\\Makilala_DEM_Fill_PRSTM51N.tif",
+          "dtype": "Float32",
+          "nodata": -3.4028234663852886e+38
+        },
+        "source_mask_raster": {
+          "path": "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Input\\Raster\\Shared Inputs\\Makilala_EIL_PRSTM51N.tif",
+          "dtype": "Byte",
+          "nodata": 3.0
+        },
+        "stream_mask_raster": {
+          "path": "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Input\\Raster\\Step5 Inputs\\Makilala_StreamMask_PRSTM51N.tif",
+          "dtype": "Byte",
+          "nodata": 3.0
+        },
+        "source_contributing_area_raster": {
+          "path": "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Input\\Raster\\Step5 Inputs\\Makilala_SWCA_PRSTM51N.tif",
+          "dtype": "Float32",
+          "nodata": -1.0
+        }
+      },
+      "output_parent_dirs": [
+        "E:\\MLPREP\\MLPREP\\Objectives\\Objective 4\\Codes_V2\\Sample Data\\Output\\Latest Runs\\Step5"
+      ],
+      "value_validation": "required_before_publication",
+      "metadata_preflight_seconds": 0.286556399998517
+    }
+  }
+}

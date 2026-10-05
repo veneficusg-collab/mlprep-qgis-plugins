@@ -1,3 +1,4 @@
+
 #!/usr/bin/env python
 """Launch DP1 through the configured QGIS LTR/OSGeo4W Python runtime."""
 
@@ -108,3 +109,4 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
